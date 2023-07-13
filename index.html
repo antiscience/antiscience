@@ -16,6 +16,7 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
 
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#fafafa">
@@ -25,7 +26,8 @@
 
   <h3>Demonstration of hashing a file with SHA256</h3>
 
-    <label>Choose file(s) to hash <input type="file" id="file" name="file" multiple/></label>
+    <label>Choose file(s) to hash</label>
+    <input type="file" id="file" name="file" multiple/>
     <output style="display:block;font-family:monospace;"></output>
 
 
@@ -61,13 +63,13 @@
     }
 
     async function hashTheseFiles(e) {
-      let outHTML = "";
+      let outHTML = "<table><th>File</th><th>SHA-256</th>";
       // iterate over each file in file select input
       for (const file of this.files) {
         // calculate its hash and list it in the output element.
-        outHTML += `${file.name}    ${await fileHash(file)}`;
+        outHTML += `<tr><td>${file.name}</td><td>${await fileHash(file)}</td></tr>`;
       }
-      output.innerHTML = outHTML;
+      output.innerHTML = outHTML + '</table>';
     }
 
   </script>  
