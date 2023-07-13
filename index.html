@@ -64,13 +64,20 @@
     }
 
     async function hashTheseFiles(e) {
-      let outHTML = "<table><th>File</th><th>SHA-256</th>";
+      output.innerHTML = '';
+      let tbl = document.createElement('table');
+      output.appendChild(tbl);
+      tbl.innerHTML = '<thead><tr><th>File</th><th>SHA-256</th></tr></thead><tbody></tbody>';
+      let tbody = tbl.getElementsByTagName('tbody')[0];
+      
       // iterate over each file in file select input
       for (const file of this.files) {
         // calculate its hash and list it in the output element.
-        outHTML += `<tr><td>${file.name}</td><td>${await fileHash(file)}</td></tr>`;
+        let hash = await fileHash(file);
+        let row = tbody.insertRow(-1);
+        row.insertCell(0).innerHTML = file.name;
+        row.insertCell(1).innerHTML = await fileHash(file);
       }
-      output.innerHTML = outHTML + '</table>';
     }
 
   </script>  
