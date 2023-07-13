@@ -24,12 +24,19 @@
 
 <body>
 
-  <h3>Demonstration of hashing a file with SHA256</h3>
+  <h3>Hash texts or files:</h3>
+  <div>
+    <input type="radio" id="sha256" name="sha" value="sha256" checked>
+    <label for="sha256">SHA-256</label>
+    <input type="radio" id="sha512" name="sha" value="sha512">
+    <label for="sha512">SHA-512</label>
+  </div>
 
+  <div>
     <label>Choose file(s) to hash</label>
     <input type="file" id="file" name="file" multiple value=""/>
     <output style="display:block;font-family:monospace;"></output>
-
+  </div>
 
 
   <script>
@@ -42,12 +49,12 @@
 
     // The digest function is asynchronous, it returns a promise
     // We use the async/await syntax to simplify the code.
-    async function fileHash(file) {
+    async function fileHash(file, hash) {
       const arrayBuffer = await file.arrayBuffer();
 
       // Use the subtle crypto API to perform a SHA256 Sum of the file's
       // Array Buffer. The resulting hash is stored in an array buffer
-      const hashAsArrayBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+      const hashAsArrayBuffer = await crypto.subtle.digest(hash, arrayBuffer);
 
       // To display it as a string we will get the hexadecimal value of
       // each byte of the array buffer. This gets us an array where each byte
@@ -64,6 +71,7 @@
     }
 
     async function hashTheseFiles(e) {
+      let hash = document.getElementById('sha256').checked ? 'SHA-256' : 'SHA-512';
       output.innerHTML = '';
       let tbl = document.createElement('table');
       output.appendChild(tbl);
@@ -73,10 +81,9 @@
       // iterate over each file in file select input
       for (const file of this.files) {
         // calculate its hash and list it in the output element.
-        let hash = await fileHash(file);
         let row = tbody.insertRow(-1);
         row.insertCell(0).innerHTML = file.name;
-        row.insertCell(1).innerHTML = await fileHash(file);
+        row.insertCell(1).innerHTML = await fileHash(file, hash);
       }
     }
 
