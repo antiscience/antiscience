@@ -23,6 +23,7 @@
     button { background-color: #eee; color: #555; }
     button:hover { background-color: #4FC3F7; color: #222; }
     button.active, button.active:hover { background-color: #1E88E5; color: #fff; }
+    button:focus, input:focus, textarea:focus { box-shadow: 0 0 0 1px #aaa; }
     section#text button { background-color: #4CAF50; color: #fff;  }
     section { display: none; margin: 20px 0; }
     section.active { display: block; }
@@ -30,6 +31,7 @@
     output.text div:nth-child(1) { flex-grow: 0; padding: 20px; background-color: #333; color: #fff; }
     output.text div:nth-child(2) { flex-grow: 1; padding: 20px; background-color: #eee; text-align: center; word-break: break-all; }
     table { table-layout: auto; word-break: break-all; }
+    .sha { font-weight: 900; font-size: 1.1em; }
   </style>
 
   <link rel="manifest" href="site.webmanifest">
@@ -107,7 +109,7 @@
     
     async function hashText() {
       const digest = await hashData(textArea.value, hash);
-      outputText.innerHTML = `<div>${hash}</div><div>${digest}</div>`;
+      outputText.innerHTML = `<div>${hash}</div><div><span class="sha">${digest}</span></div>`;
     }
 
     async function hashFiles() {
@@ -120,7 +122,7 @@
       for (const file of fileInput.files) {
         let row = tbody.insertRow(-1);
         row.insertCell(0).innerHTML = file.name;
-        row.insertCell(1).innerHTML = await hashData(file, hash);
+        row.insertCell(1).innerHTML = `<span class="sha">${await hashData(file, hash)}</span>`;
       }
     }
 
@@ -139,6 +141,15 @@
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
       return hashAsString;
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(
+        () => {
+        },
+        () => {
+        },
+     );
     }
 
   </script>  
