@@ -18,7 +18,8 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/light.css">
   <style>
-    h2, h3 { margin-top: 0; }
+    header { margin: 0 0 20px; }
+    h2, h3 { margin-top: 0; margin-bottom: 0; }
     button { background-color: #eee; color: #555; }
     button:hover { background-color: #4FC3F7; color: #222; }
     button.active, button.active:hover { background-color: #1E88E5; color: #fff; }
@@ -36,9 +37,13 @@
 </head>
 
 <body>
-
-  <h2>In-browser Hash Calculator</h2>
-  <h3>Generate SHA digest for text or files</h3>
+  <header>
+    <h1>&Hopf;&#8525;&planck;</h1>
+    <h2>In-browser Hash Calculator</h2>
+    <h3>Generate SHA digest for text and files</h3>
+  <div>Nothing is sent to the server, all is done locally in your browser.<br /> 
+      <small>You can check the networking activity in browser Developer Tools &rarr; Network console.</small></div>
+  </header>
   <div id="hashes">
     <button type="button" value="SHA-256" class="active">SHA-256</button>
     <button type="button" value="SHA-512">SHA-512</button>
