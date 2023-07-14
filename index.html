@@ -18,13 +18,16 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/light.css">
   <style>
+    h2, h3 { margin-top: 0; }
     button { background-color: #1E88E5; color: #fff; }
     button:hover { background-color: #1565C0; }
     button.active, button.active:hover { background-color: #E53935; }
     section { display: none; margin: 20px 0; }
     section.active { display: block; }
-    output { font-family:monospace; margin: 20px 0; }
-    output.text div { padding: 20px; background-color: #eee; display: table-cell; }
+    output { display: flex; font-family: monospace; margin: 20px 0; }
+    output.text div:nth-child(1) { flex-grow: 0; padding: 20px; background-color: #333; color: #fff; }
+    output.text div:nth-child(2) { flex-grow: 1; padding: 20px; background-color: #eee; text-align: center; word-break: break-all; }
+
   </style>
 
   <link rel="manifest" href="site.webmanifest">
@@ -33,7 +36,8 @@
 
 <body>
 
-  <h3>Hash texts or files:</h3>
+  <h2>In-browser Hash Calculator</h2>
+  <h3>Generate SHA digest for text or files</h3>
   <div id="hashes">
     <button type="button" value="SHA-256" class="active">SHA-256</button>
     <button type="button" value="SHA-512">SHA-512</button>
@@ -61,7 +65,7 @@
     const outputFiles = document.querySelector("#files output");
 
     const fileInput = document.querySelector("#files input[type=file]");
-    const textArea = document.querySelector("#text button");
+    const textArea = document.querySelector("#text textarea");
 
     fileInput.value = '';
     let hash = 'SHA-256';
@@ -93,10 +97,10 @@
     }
 
     fileInput.addEventListener("change", hashFiles);
-    textArea.addEventListener("click", hashText);
+    document.querySelector("#text button").addEventListener("click", hashText);
     
     async function hashText() {
-      let digest = await hashData(textArea.value, hash);
+      const digest = await hashData(textArea.value, hash);
       outputText.innerHTML = `<div>${hash}</div><div>${digest}</div>`;
     }
 
