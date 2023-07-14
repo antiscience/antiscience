@@ -18,7 +18,13 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/light.css">
   <style>
-    button.active { background-color: blue; color:aliceblue; }
+    button { background-color: #1E88E5; color: #fff; }
+    button:hover { background-color: #1565C0; }
+    button.active, button.active:hover { background-color: #E53935; }
+    section { display: none; margin: 20px 0; }
+    section.active { display: block; }
+    output { font-family:monospace; margin: 20px 0; }
+    output.text div { padding: 20px; background-color: #eee; display: table-cell; }
   </style>
 
   <link rel="manifest" href="site.webmanifest">
@@ -38,17 +44,17 @@
     <button type="button" value="files">Files</button>
   </div>
 
-  <div id="files">
+  <section id="files">
     <label>Choose file(s) to hash</label>
     <input type="file" name="file" multiple value=""/>
-    <output style="display:block;font-family:monospace;"></output>
-  </div>
+    <output class="files"></output>
+  </section>
 
-  <div id="text">
+  <section id="text" class="active">
     <textarea autocomplete="off"></textarea>
     <button type="button">Hash it</button>
-    <output style="display:block;font-family:monospace;"></output>
-  </div>
+    <output class="text"></output>
+  </section>
 
   <script>
     const outputText = document.querySelector("#text output");
@@ -73,14 +79,16 @@
     }
 
     const typeButtons = document.querySelectorAll('#types > button');
+
     for (const btn of typeButtons) {
       btn.addEventListener("click", () => {
         type = btn.value;
         for (const b of typeButtons) {
           b.classList.remove("active");
-          
+          document.querySelector("section#" + b.value).classList.remove("active");
         }
         btn.classList.add("active");
+        document.querySelector("section#" + type).classList.add("active");
       })
     }
 
@@ -89,14 +97,14 @@
     
     async function hashText() {
       let digest = await hashData(textArea.value, hash);
-      outputText.innerHTML = `<div>${digest}</div>`;
+      outputText.innerHTML = `<div>${hash}</div><div>${digest}</div>`;
     }
 
     async function hashFiles() {
       outputFiles.innerHTML = '';
       const tbl = document.createElement('table');
       outputFiles.appendChild(tbl);
-      tbl.innerHTML = '<thead><tr><th>File</th><th>SHA-256</th></tr></thead><tbody></tbody>';
+      tbl.innerHTML = `<thead><tr><th>File</th><th>${hash}</th></tr></thead><tbody></tbody>`;
       let tbody = tbl.getElementsByTagName('tbody')[0];
       
       for (const file of fileInput.files) {
