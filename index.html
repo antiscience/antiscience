@@ -35,105 +35,92 @@
 
   <div id="types">
     <button type="button" value="text" class="active">Text</button>
-    <button type="button" value="file">Files</button>
+    <button type="button" value="files">Files</button>
   </div>
 
-  <div>
+  <div id="files">
     <label>Choose file(s) to hash</label>
-    <input type="file" id="file" name="file" multiple value=""/>
+    <input type="file" name="file" multiple value=""/>
+    <output style="display:block;font-family:monospace;"></output>
   </div>
 
-  <div>
-    <textarea id="text" autocomplete="off"></textarea>
-    <button type="button" id="hashText">Hash it</button>
+  <div id="text">
+    <textarea autocomplete="off"></textarea>
+    <button type="button">Hash it</button>
+    <output style="display:block;font-family:monospace;"></output>
   </div>
-
-  <output style="display:block;font-family:monospace;"></output>
 
   <script>
-    const output = document.querySelector("output");
-    const file = document.getElementById("file");
-    file.value = '';
+    const outputText = document.querySelector("#text output");
+    const outputFiles = document.querySelector("#files output");
+
+    const fileInput = document.querySelector("#files input[type=file]");
+    const textArea = document.querySelector("#text button");
+
+    fileInput.value = '';
     let hash = 'SHA-256';
     let type = 'text'
 
-    const hashBtns = document.getElementById("hashes").querySelectorAll('button');
-    for (const btn of hashBtns) {
+    const hashButtons = document.querySelectorAll('#hashes > button');
+    for (const btn of hashButtons) {
       btn.addEventListener("click", () => {
         hash = btn.value;
-        for (const b of hashBtns) b.classList.remove("active");
+        for (const b of hashButtons) {
+          b.classList.remove("active");
+        }
         btn.classList.add("active");
-      }
-      )
+      })
     }
 
-    const text = document.getElementById("hashText");
-    text.addEventListener("click", hashThisText);
-    
-    async function hashThisText() {
-      let digest = await textHash(text.value, hash);
-      output.innerHTML = `<div>${digest}</div>`;
-    }
-
-    const inputType = document.getElementById("types").querySelectorAll('button');
-    for (const btn of inputType) {
+    const typeButtons = document.querySelectorAll('#types > button');
+    for (const btn of typeButtons) {
       btn.addEventListener("click", () => {
         type = btn.value;
-        for (const b of inputType) b.classList.remove("active");
+        for (const b of typeButtons) {
+          b.classList.remove("active");
+          
+        }
         btn.classList.add("active");
-      }
-      )
+      })
     }
-    // Run the hashing function when the user selects one or more file
-    file.addEventListener("change", hashTheseFiles);
 
-    // The digest function is asynchronous, it returns a promise
-    // We use the async/await syntax to simplify the code.
-    async function fileHash(file, hash) {
-      const arrayBuffer = await file.arrayBuffer();
+    fileInput.addEventListener("change", hashFiles);
+    textArea.addEventListener("click", hashText);
+    
+    async function hashText() {
+      let digest = await hashData(textArea.value, hash);
+      outputText.innerHTML = `<div>${digest}</div>`;
+    }
 
-      // Use the subtle crypto API to perform a SHA256 Sum of the file's
-      // Array Buffer. The resulting hash is stored in an array buffer
+    async function hashFiles() {
+      outputFiles.innerHTML = '';
+      const tbl = document.createElement('table');
+      outputFiles.appendChild(tbl);
+      tbl.innerHTML = '<thead><tr><th>File</th><th>SHA-256</th></tr></thead><tbody></tbody>';
+      let tbody = tbl.getElementsByTagName('tbody')[0];
+      
+      for (const file of fileInput.files) {
+        let row = tbody.insertRow(-1);
+        row.insertCell(0).innerHTML = file.name;
+        row.insertCell(1).innerHTML = await hashData(file, hash);
+      }
+    }
+
+    async function hashData(data, hash) {
+      console.log(typeof data)
+      let arrayBuffer;
+      if (typeof data === 'object') {
+        arrayBuffer = await data.arrayBuffer();
+      }
+      else if (typeof data === 'string') {
+        arrayBuffer = new TextEncoder().encode(data);
+      }
       const hashAsArrayBuffer = await crypto.subtle.digest(hash, arrayBuffer);
-
-      // To display it as a string we will get the hexadecimal value of
-      // each byte of the array buffer. This gets us an array where each byte
-      // of the array buffer becomes one item in the array
       const uint8ViewOfHash = new Uint8Array(hashAsArrayBuffer);
-      // We then convert it to a regular array so we can convert each item
-      // to hexadecimal strings, where characters of 0-9 or a-f represent
-      // a number between 0 and 16, containing 4 bits of information,
-      // so 2 of them is 8 bits (1 byte).
       const hashAsString = Array.from(uint8ViewOfHash)
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
       return hashAsString;
-    }
-
-    async function hashTheseFiles(e) {
-      output.innerHTML = '';
-      let tbl = document.createElement('table');
-      output.appendChild(tbl);
-      tbl.innerHTML = '<thead><tr><th>File</th><th>SHA-256</th></tr></thead><tbody></tbody>';
-      let tbody = tbl.getElementsByTagName('tbody')[0];
-      
-      // iterate over each file in file select input
-      for (const file of this.files) {
-        // calculate its hash and list it in the output element.
-        let row = tbody.insertRow(-1);
-        row.insertCell(0).innerHTML = file.name;
-        row.insertCell(1).innerHTML = await fileHash(file, hash);
-      }
-    }
-
-    async function textHash(text, hash) {
-      const data = new TextEncoder().encode(text);
-      const hashBuffer = await crypto.subtle.digest(hash, data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const digest = hashArray
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join(""); 
-      return digest;
     }
 
   </script>  
