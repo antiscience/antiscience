@@ -245,3 +245,115 @@ textarea {
   }
 }
 
+/* Custom */
+header { margin: 0 0 20px; }
+h2, h3 { margin-top: 0; margin-bottom: 0; }
+button { background-color: #eee; color: #555; }
+button:hover { background-color: #4FC3F7; color: #222; }
+button.active, button.active:hover { background-color: #1E88E5; color: #fff; }
+button:focus, input:focus, textarea:focus { box-shadow: 0 0 0 1px #aaa; }
+section#text button { background-color: #4CAF50; color: #fff;  }
+section { display: none; margin: 20px 0; }
+section.active { display: block; }
+output { display: flex; font-family: monospace; margin: 20px 0; }
+output.text div:nth-child(1) { flex-grow: 0; padding: 20px; background-color: #333; color: #fff; }
+output.text div:nth-child(2) { flex-grow: 1; padding: 20px; background-color: #eee; text-align: center; word-break: break-all; }
+table { table-layout: auto; word-break: break-all; }
+.sha { font-weight: 900; font-size: 1.1em; }
+footer { font-size: small; color: #888; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  border-radius: 4px;
+  background: #fff;
+  padding: 20px 35px 20px 20px;
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: translateX(calc(100% + 30px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+
+.toast.active {
+  transform: translateX(0%);
+}
+
+.toast .toast-content {
+  display: flex;
+  align-items: center;
+}
+
+.toast-content .check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  min-width: 35px;
+  background-color: #4070f4;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.toast-content .message {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.message .text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.message .text.text-1 {
+  font-weight: 600;
+  color: #333;
+}
+
+.toast .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 12px 5px 17px;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 30px;
+  line-height: 0;
+}
+
+.toast .close:hover {
+  opacity: 1;
+}
+
+.toast .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+
+}
+
+.toast .progress:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #4070f4;
+}
+
+.progress.active:before {
+  animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}

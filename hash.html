@@ -17,24 +17,6 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/light.css">
-  <style>
-    header { margin: 0 0 20px; }
-    h2, h3 { margin-top: 0; margin-bottom: 0; }
-    button { background-color: #eee; color: #555; }
-    button:hover { background-color: #4FC3F7; color: #222; }
-    button.active, button.active:hover { background-color: #1E88E5; color: #fff; }
-    button:focus, input:focus, textarea:focus { box-shadow: 0 0 0 1px #aaa; }
-    section#text button { background-color: #4CAF50; color: #fff;  }
-    section { display: none; margin: 20px 0; }
-    section.active { display: block; }
-    output { display: flex; font-family: monospace; margin: 20px 0; }
-    output.text div:nth-child(1) { flex-grow: 0; padding: 20px; background-color: #333; color: #fff; }
-    output.text div:nth-child(2) { flex-grow: 1; padding: 20px; background-color: #eee; text-align: center; word-break: break-all; }
-    table { table-layout: auto; word-break: break-all; }
-    .sha { font-weight: 900; font-size: 1.1em; }
-    footer { font-size: small; color: #888; }
-  </style>
-
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#fafafa">
 </head>
@@ -70,6 +52,20 @@
   </section>
 
   <footer>Made at BBQ on July 14, 2023. Just for fun. 100% recycled code. <span style="color: #000; font-weight: 900;">&Ropf;<sup>3</sup></span></footer>
+  
+  <div class="toast active">
+    <div class="toast-content">
+      <div class="check"></div>
+      <div class="message">
+        <span class="text text-1">Success</span>
+        <span class="text text-2">Your changes has been saved</span>
+      </div>
+    </div>  
+    <span href="#" class="close">&times;</span>
+    <div class="progress"></div>
+  </div>
+  
+  
   <script>
     const outputText = document.querySelector("#text output");
     const outputFiles = document.querySelector("#files output");
@@ -148,6 +144,7 @@
     function copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(
         () => {
+
         },
         () => {
         },
