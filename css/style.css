@@ -261,6 +261,9 @@ output.text div:nth-child(2) { flex-grow: 1; padding: 20px; background-color: #e
 table { table-layout: auto; word-break: break-all; }
 .sha { font-weight: 900; font-size: 1.1em; }
 footer { font-size: small; color: #888; }
+input { display: inline-block; vertical-align: baseline; margin-left: 20px; }
+
+
 
 /* Toast */
 .toast {

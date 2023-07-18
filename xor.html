@@ -15,8 +15,8 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
 
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/light.css">
+  <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#fafafa">
 </head>
@@ -30,13 +30,8 @@
       <small>You can check the networking activity in browser Developer Tools &rarr; Network console.</small></div>
   </header>
 
-  <div id="types">
-    <button type="button" value="text" class="active">Text</button>
-    <button type="button" value="files">Files</button>
-  </div>
-
   <section id="text" class="active">
-    <input id="key" type="text" size="5">
+    <label>Key:</label><input id="key" type="text" size="8" minlength="8" maxlength="8" pattern=[01]{8} placeholder="8-bit binary" required>
     <textarea autocomplete="off"></textarea>
     <button type="button">Encrypt it</button>
     <output class="text"></output>
@@ -101,11 +96,10 @@
         let dec;
         for (let i = 0; i < text.length; i++) {
           dec = text.charCodeAt(i)^decKey;
-          res.dec += dec; console.log(dec);
+          res.dec += dec; 
           res.bin += dec2bin(dec);
           res.str += String.fromCharCode(dec);
         }
-        console.log(res);
         return res;
     }
 
