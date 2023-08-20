@@ -41,17 +41,22 @@
   </div>
 
   <div id="ticker" class="hidden"></div>
+  <label for="progress">Progress:</label>
+  <div id="progressBar">
+    <div id="progress">0%</div>
+  </div>
 
   <section id="test">
     <div id="id"></div>
     <div id="Question"></div>
     <div id="Options"></div>
-    <div id="Answer" class="hidden"></div>
-    <div id="Explanation" class="hidden"></div>
 
     <button type="button" id="next">Save & Next</button>
     <button type="button" id="explain">Explain</button>
     <button type="button" id="stop">Exit & Stats</button>
+
+    <div id="Answer" class="hidden"></div>
+    <div id="Explanation" class="hidden"></div>
   </section>
 
   <section id="result"></section>
@@ -93,6 +98,7 @@
     const optSection = document.querySelector('#Options');
     const resSection = document.querySelector('#result');
     const tickerDiv = document.querySelector('#ticker');
+    const progressBar = document.querySelector('#progress');
 
     const shuffleArray = array => {
       for (let i = array.length - 1; i > 0; i--) {
@@ -119,6 +125,7 @@
       tickerDiv.innerHTML = '';
       resSection.classList.remove('active');
       resSection.innerHTML = '';
+      progressBar.style.width = progressBar.innerHTML = '0%';
       initQeue();
       showQuestion(state.part, state.qeue[0][0]);
       testSection.classList.add('active');
@@ -136,7 +143,7 @@
       }
       question["Options"] = optHtml;
       question["Answer"] = 'Correct answer: <span>' + question["Answer"] + '</span>';
-      question["id"] = 'No. ' + question["id"];
+      question["id"] = 'ID: ' + question["id"];
       for (const field of fields) {
         field.innerHTML = question[field.id]
       }
@@ -148,6 +155,10 @@
       state.qeue[state.cursor][1] = answer; 
       showTicker(state.part, state.qeue[state.cursor][0], answer);
 
+      const progress = Math.round((state.cursor + 1)*100/state.qeue.length) + '%';
+      progressBar.style.width = progress;
+      progressBar.innerHTML = progress;
+
       state.cursor += 1; 
       if (state.cursor == state.qeue.length) {
         stop();
@@ -158,11 +169,12 @@
 
     showTicker = (part, index, answer) => {
       const correct = Q[part][index]["Answer"].split(',').sort().join(''); 
-      console.log(correct, answer);
+      const id = Q[part][index]["id"];
+      console.log(id, correct, answer);
       if (answer.length == 0) answer = "&mdash;";
       const res = correct == answer ? 'right' : 'wrong';
 
-      let tickerHtml = `<a class="ticker ${res}">${answer}</a>`;
+      let tickerHtml = `<a class="ticker ${res}">${id}</a>`;
       tickerDiv.innerHTML += tickerHtml;
       if (state.cursor == 0) tickerDiv.classList.remove('hidden');
     }
@@ -194,9 +206,10 @@
         if (answer == correct) right += 1; else wrong += 1;
       }
       resSection.innerHTML = `<h1>FINISHED!</h1><h2>Your score: <b>${Math.round(right*100/answered)}</b>%</h2>
-      Correct: <b>${right}</b><br>
-      Wrong: <b>${wrong}</b><br>
-      Not answered: <b>${noanswer}</b><br>`;
+      <p>Your answered <b>${answered}</b> questions</p>
+      <p>Correct: <b>${right}</b></p>
+      <p>Wrong: <b>${wrong}</b></p>
+      <p>No answer: <b>${noanswer}</b></p>`;
       resSection.classList.add('active');
     }
 

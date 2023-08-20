@@ -264,14 +264,15 @@ table { table-layout: auto; word-break: break-all; }
 .sha { font-weight: 900; font-size: 1.1em; }
 footer { font-size: small; color: #888; }
 input { display: inline-block; vertical-align: baseline; margin-left: 20px; }
+#test_type { margin: 20px auto;}
 #test_type p { background: #f5f5f5; padding: 20px; }
 label { display: block; }
-#ticker { margin: 20px auto; padding: 5px; border: 2px solid #eee; background: #f7f7f7;}
+#ticker { margin: 0 auto 10px; padding: 5px; background: #f7f7f7;}
 .ticker { display: inline-block; padding: 5px 10px; margin: 1px; color: #fff; }
 .ticker.right { background: #18ba1e; }
 .ticker.wrong { background: #f42828 }
 button#start { background: #4bb70f; color: #fff; font-weight: 600; }
-section#test { margin: 40px auto; }
+section#test { margin: 20px auto; }
 #id {
 	background: #333;
 	display: inline-block;
@@ -296,7 +297,7 @@ section#test { margin: 40px auto; }
 	padding: 10px 10px;
 	border-radius: 4px;
 	background: #f5f5f5;
-  margin: 0 auto 10px;
+  margin: 20px auto 10px;
 }
 #Answer span {
 	background: #222;
@@ -326,6 +327,19 @@ button#stop {
 	float: right;
 	background: #f23434;
 	color: #fff;
+}
+
+#progress {
+  width: 0;
+  overflow: visible;
+  white-space: nowrap;
+	background: rgb(157, 212, 244) none repeat scroll 0% 0%;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+#progressBar {
+	background: #eff7ff;
 }
 
 /* Toast */
