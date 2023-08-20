@@ -246,7 +246,9 @@ textarea {
 }
 
 /* Custom */
+body { margin: 0 auto 10px; }
 header { margin: 0 0 20px; }
+h1 { margin-top: 0; }
 h2, h3 { margin-top: 0; margin-bottom: 0; }
 button { background-color: #eee; color: #555; }
 button:hover { background-color: #4FC3F7; color: #222; }
@@ -262,7 +264,8 @@ table { table-layout: auto; word-break: break-all; }
 .sha { font-weight: 900; font-size: 1.1em; }
 footer { font-size: small; color: #888; }
 input { display: inline-block; vertical-align: baseline; margin-left: 20px; }
-
+#test_type p { background: #efefef; padding: 20px; }
+label { display: block; }
 
 
 /* Toast */
