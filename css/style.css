@@ -267,16 +267,16 @@ input { display: inline-block; vertical-align: baseline; margin-left: 20px; }
 #test_type { margin: 20px auto;}
 #test_type p { background: #f5f5f5; padding: 20px; }
 label { display: block; }
-#ticker { margin: 0 auto 10px; padding: 5px; background: #f7f7f7;}
-.ticker { display: inline-block; padding: 5px 10px; margin: 1px; color: #fff; }
+#ticker { margin: 0 auto 10px; padding: 5px; background: #f7f7f7; }
+.ticker { display: inline-block; padding: 5px 10px; margin: 1px; color: #fff; border-radius: 4px; }
 .ticker.right { background: #18ba1e; }
 .ticker.wrong { background: #f42828 }
 button#start { background: #4bb70f; color: #fff; font-weight: 600; }
 section#test { margin: 20px auto; }
 #id {
-	background: #333;
+	background: #eee;
 	display: inline-block;
-	color: #fff;
+	color: #111;
 	padding: 5px 10px;
 	border-radius: 4px;
 }

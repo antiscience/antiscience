@@ -46,12 +46,14 @@
     <div id="progress">0%</div>
   </div>
 
+  <div id="clock"></div>
+
   <section id="test">
     <div id="id"></div>
     <div id="Question"></div>
     <div id="Options"></div>
 
-    <button type="button" id="next">Save & Next</button>
+    <button type="button" id="next">Next</button>
     <button type="button" id="explain">Explain</button>
     <button type="button" id="stop">Exit & Stats</button>
 
@@ -83,7 +85,8 @@
         type: 'train',
         part: '1',
         qeue: [],
-        examSize: 5
+        examSize: 60,
+        examTime: 1 
       }
     
     const partButtons = document.querySelectorAll('#test_part > button');
@@ -129,6 +132,10 @@
       initQeue();
       showQuestion(state.part, state.qeue[0][0]);
       testSection.classList.add('active');
+
+      if (state.type == "exam") {
+        timer(state.examTime);
+      }
     }
 
     showQuestion = (part, index) => {
@@ -213,6 +220,25 @@
       resSection.classList.add('active');
     }
 
+    const timer = (t) => {
+      const currentTime = Date.parse(new Date());
+      const deadline = new Date(currentTime + t*60*1000);
+      const clock = document.getElementById('clock');
+
+      const update = () => {
+        const t = Date.parse(deadline) - Date.parse(new Date());
+        const seconds = Math.floor( (t/1000) % 60 );
+        const minutes = Math.floor( (t/1000) / 60 );
+        clock.innerHTML = minutes + ':' + seconds;
+        if ( t <= 0 ) { 
+          clearInterval(timeInterval); 
+          stop();
+        }
+      }
+      update(); 
+      let timeInterval = setInterval(update, 1000);
+    }
+
     init = () => {
       const buttonSets = [partButtons, typeButtons];
       for (const buttonSet of buttonSets) {
@@ -227,10 +253,10 @@
         }
       }
 
-    nextButton.addEventListener("click", next);
-    startButton.addEventListener("click", start);
-    explainButton.addEventListener('click', explain);
-    stopButton.addEventListener("click", stop);
+      nextButton.addEventListener("click", next);
+      startButton.addEventListener("click", start);
+      explainButton.addEventListener('click', explain);
+      stopButton.addEventListener("click", stop);
     }
   </script>  
   <script>
