@@ -46,7 +46,7 @@
     <div id="progress">0%</div>
   </div>
 
-  <div id="clock"></div>
+  <div id="clock" class="hidden"></div>
 
   <section id="test">
     <div id="id"></div>
@@ -102,6 +102,7 @@
     const resSection = document.querySelector('#result');
     const tickerDiv = document.querySelector('#ticker');
     const progressBar = document.querySelector('#progress');
+    const clock = document.querySelector('#clock');
 
     const shuffleArray = array => {
       for (let i = array.length - 1; i > 0; i--) {
@@ -134,6 +135,7 @@
       testSection.classList.add('active');
 
       if (state.type == "exam") {
+        clock.classList.remove('hidden');
         timer(state.examTime);
       }
     }
@@ -195,12 +197,14 @@
       for (const button of [...partButtons, ...typeButtons, startButton]) {
         button.disabled = false;
       }
+      clock.classList.add('hidden');
+      clock.innerHTML = '';
       showResults();
     }
 
     const showResults = () => {
-      const answered = state.cursor;
-      if (!answered) return;
+      const answered = state.type == 'exam' ? state.examSize : state.cursor;
+      if (state.type == 'train' && !answered) return;
       let right = 0, wrong = 0, noanswer = 0;
       for (let i = 0; i < state.cursor; i++) {
         const answer = state.qeue[i][1];
@@ -213,7 +217,7 @@
         if (answer == correct) right += 1; else wrong += 1;
       }
       resSection.innerHTML = `<h1>FINISHED!</h1><h2>Your score: <b>${Math.round(right*100/answered)}</b>%</h2>
-      <p>Your answered <b>${answered}</b> questions</p>
+      <p>Your answered <b>${state.cursor}</b> questions</p>
       <p>Correct: <b>${right}</b></p>
       <p>Wrong: <b>${wrong}</b></p>
       <p>No answer: <b>${noanswer}</b></p>`;
@@ -223,13 +227,12 @@
     const timer = (t) => {
       const currentTime = Date.parse(new Date());
       const deadline = new Date(currentTime + t*60*1000);
-      const clock = document.getElementById('clock');
 
       const update = () => {
         const t = Date.parse(deadline) - Date.parse(new Date());
-        const seconds = Math.floor( (t/1000) % 60 );
-        const minutes = Math.floor( (t/1000) / 60 );
-        clock.innerHTML = minutes + ':' + seconds;
+        const seconds = Math.floor( (t/1000) % 60 ).toString();
+        const minutes = Math.floor( (t/1000) / 60 ).toString();
+        clock.innerHTML = minutes.padStart(2, '0') + ':' + seconds.padStart(2, '0');
         if ( t <= 0 ) { 
           clearInterval(timeInterval); 
           stop();
