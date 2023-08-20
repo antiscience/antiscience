@@ -34,14 +34,13 @@
 
   <div id="test_type">
     <p>- <b>Trainig mode</b> spits out ALL (306/286) questions in random order<br>
-    - <b>Exam Simulator</b> mode will ask you 60 random questions and give you 60 minutes to answer them</p>
+      - <b>Exam Simulator</b> mode will ask you 60 random questions and give you 60 minutes to answer them</p>  
+    <button type="button" name="type" value="train" class="active">Training</button>
+    <button type="button" name="type" value="exam">Exam Simulation</button>
+    <button id="start" type="button" name="start" value="start">Start</button>
   </div>
 
-  <div id="test_start">
-    <button type="button" name="start" value="start">Start</button>
-  </div>
-
-  <div id="ticker"></div>
+  <div id="ticker" class="hidden"></div>
 
   <section id="test">
     <div id="id"></div>
@@ -50,15 +49,12 @@
     <div id="Answer" class="hidden"></div>
     <div id="Explanation" class="hidden"></div>
 
-    <button type="button" id="next">Next</button>
+    <button type="button" id="next">Save & Next</button>
     <button type="button" id="explain">Explain</button>
-    <button type="button" id="stop">Stop</button>
-
+    <button type="button" id="stop">Exit & Stats</button>
   </section>
 
-  <section id="result">
-
-  </section>
+  <section id="result"></section>
 
   <footer>Made at BBQ on July 14, 2023. Just for fun. 100% recycled code. <span style="color: #000; font-weight: 900;">&Ropf;<sup>3</sup></span></footer>
   
@@ -86,8 +82,8 @@
       }
     
     const partButtons = document.querySelectorAll('#test_part > button');
-    const typeButtons = document.querySelectorAll('#test_type > button');
-    const startButton = document.querySelector('#test_start > button');
+    const typeButtons = document.querySelectorAll('button[name="type"]');
+    const startButton = document.querySelector('button#start');
     const testSection = document.querySelector("section#test");
     const fields = document.querySelectorAll("#test > div"); 
     const nextButton = document.querySelector("button#next");
@@ -101,7 +97,7 @@
     const shuffleArray = array => {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [array[i], array[j]] = [array[j], array[i]]; 
       }
     }
 
@@ -119,21 +115,28 @@
       for (const button of [...partButtons, ...typeButtons, startButton]) {
         button.disabled = true;
       }
+      tickerDiv.classList.add('hidden');
+      tickerDiv.innerHTML = '';
+      resSection.classList.remove('active');
+      resSection.innerHTML = '';
       initQeue();
-      showQuestion(state.part, 0);
+      showQuestion(state.part, state.qeue[0][0]);
       testSection.classList.add('active');
     }
 
     showQuestion = (part, index) => {
       explainSection.forEach((el) => el.classList.add("hidden"));
 
-      let question = Q[part][state.qeue[index][0]];
+      let question = {...Q[part][index]};
+
       let optHtml = '';
       let opts = question["Options"];
       for (const opt in opts) {
         optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
       }
       question["Options"] = optHtml;
+      question["Answer"] = 'Correct answer: <span>' + question["Answer"] + '</span>';
+      question["id"] = 'No. ' + question["id"];
       for (const field of fields) {
         field.innerHTML = question[field.id]
       }
@@ -141,27 +144,27 @@
 
     const next = () => {
       const checked = optSection.querySelectorAll('input[type="checkbox"]:checked');
-      const answer = Array.from(checked).map(x => x.id);
-      state.qeue[state.cursor][1] = answer.join('');
-      showTicker(state.part, state.cursor, answer);
+      const answer = Array.from(checked).map(checked => checked.id).sort().join('');
+      state.qeue[state.cursor][1] = answer; 
+      showTicker(state.part, state.qeue[state.cursor][0], answer);
 
-      if (state.cursor + 1 == state.qeue.length) {
+      state.cursor += 1; 
+      if (state.cursor == state.qeue.length) {
         stop();
         return;
       }
-
-      state.cursor += 1; 
-      showQuestion(state.part, state.cursor);
+      showQuestion(state.part, state.qeue[state.cursor][0]);
     }
 
-    showTicker = (part, index, answers) => {
-      const correct = Q[part][index]["Answer"].split(',');
-      correct.sort();
-      answers.sort();
-      const res = correct == answers ? 'right' : 'wrong';
+    showTicker = (part, index, answer) => {
+      const correct = Q[part][index]["Answer"].split(',').sort().join(''); 
+      console.log(correct, answer);
+      if (answer.length == 0) answer = "&mdash;";
+      const res = correct == answer ? 'right' : 'wrong';
 
-      let tickerHtml = `<a class="ticker ${res}">${answers.join('')}</a>`;
+      let tickerHtml = `<a class="ticker ${res}">${answer}</a>`;
       tickerDiv.innerHTML += tickerHtml;
+      if (state.cursor == 0) tickerDiv.classList.remove('hidden');
     }
 
     const explain = () => {
@@ -177,10 +180,24 @@
     }
 
     const showResults = () => {
-      let t, f, n;
-      for (const r of state.qeue) {
-
+      const answered = state.cursor;
+      if (!answered) return;
+      let right = 0, wrong = 0, noanswer = 0;
+      for (let i = 0; i < state.cursor; i++) {
+        const answer = state.qeue[i][1];
+        if (answer.length == 0) {
+          noanswer += 1;
+          continue;
+        }
+        const qNum = state.qeue[i][0];
+        const correct = Q[state.part][qNum]["Answer"].split(',').sort().join('');
+        if (answer == correct) right += 1; else wrong += 1;
       }
+      resSection.innerHTML = `<h1>FINISHED!</h1><h2>Your score: <b>${Math.round(right*100/answered)}</b>%</h2>
+      Correct: <b>${right}</b><br>
+      Wrong: <b>${wrong}</b><br>
+      Not answered: <b>${noanswer}</b><br>`;
+      resSection.classList.add('active');
     }
 
     init = () => {

@@ -250,8 +250,8 @@ body { margin: 0 auto 10px; }
 header { margin: 0 0 20px; }
 h1 { margin-top: 0; }
 h2, h3 { margin-top: 0; margin-bottom: 0; }
-button { background-color: #eee; color: #555; }
-button:hover { background-color: #4FC3F7; color: #222; }
+button { background-color: #cde2f4; color: #5377b0; margin-bottom: 0; }
+button:hover { background-color: #AED3F4; color: #222; }
 button.active, button.active:hover { background-color: #1E88E5; color: #fff; }
 button:focus, input:focus, textarea:focus { box-shadow: 0 0 0 1px #aaa; }
 section#text button { background-color: #4CAF50; color: #fff;  }
@@ -264,9 +264,69 @@ table { table-layout: auto; word-break: break-all; }
 .sha { font-weight: 900; font-size: 1.1em; }
 footer { font-size: small; color: #888; }
 input { display: inline-block; vertical-align: baseline; margin-left: 20px; }
-#test_type p { background: #efefef; padding: 20px; }
+#test_type p { background: #f5f5f5; padding: 20px; }
 label { display: block; }
+#ticker { margin: 20px auto; padding: 5px; border: 2px solid #eee; background: #f7f7f7;}
+.ticker { display: inline-block; padding: 5px 10px; margin: 1px; color: #fff; }
+.ticker.right { background: #18ba1e; }
+.ticker.wrong { background: #f42828 }
+button#start { background: #4bb70f; color: #fff; font-weight: 600; }
+section#test { margin: 40px auto; }
+#id {
+	background: #333;
+	display: inline-block;
+	color: #fff;
+	padding: 5px 10px;
+	border-radius: 4px;
+}
+#Question {
+	background: #efefef;
+	padding: 30px;
+	margin: 10px auto;
+	border-radius: 4px;
+	color: #000;
+}
+#Options {
+	background: #f4f4f4;
+	padding: 20px 20px 10px;
+  margin: 0 auto 10px;
+  border-radius: 4px;
+}
+#Answer {
+	padding: 10px 10px;
+	border-radius: 4px;
+	background: #f5f5f5;
+  margin: 0 auto 10px;
+}
+#Answer span {
+	background: #222;
+	color: #fff;
+	padding: 5px 20px;
+	border-radius: 4px;
+	margin-left: 10px;
+}
+#Explanation {
+	background: #f5f5f5;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 0 auto 20px;
+}
 
+button#next {
+	background: #111;
+	color: #fff;
+}
+
+button#explain {
+	background: #ddd;
+	color: #111;
+}
+
+button#stop {
+	float: right;
+	background: #f23434;
+	color: #fff;
+}
 
 /* Toast */
 .toast {
