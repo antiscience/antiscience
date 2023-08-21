@@ -86,7 +86,7 @@
         part: '1',
         qeue: [],
         examSize: 60,
-        examTime: 1 
+        examTime: 60
       }
     
     const partButtons = document.querySelectorAll('#test_part > button');
@@ -216,7 +216,7 @@
         const correct = Q[state.part][qNum]["Answer"].split(',').sort().join('');
         if (answer == correct) right += 1; else wrong += 1;
       }
-      resSection.innerHTML = `<h1>FINISHED!</h1><h2>Your score: <b>${Math.round(right*100/answered)}</b>%</h2>
+      resSection.innerHTML = `<h1>FINISHED!</h1><h2>Your score: <b>${Math.round(right*100/answered)}</b>% out of ${answered}</h2>
       <p>Your answered <b>${state.cursor}</b> questions</p>
       <p>Correct: <b>${right}</b></p>
       <p>Wrong: <b>${wrong}</b></p>

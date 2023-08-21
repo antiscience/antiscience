@@ -250,7 +250,7 @@ body { margin: 0 auto 10px; }
 header { margin: 0 0 20px; }
 h1 { margin-top: 0; }
 h2, h3 { margin-top: 0; margin-bottom: 0; }
-button { background-color: #cde2f4; color: #5377b0; margin-bottom: 0; }
+button { background-color: #cde2f4; color: #5377b0; }
 button:hover { background-color: #AED3F4; color: #222; }
 button.active, button.active:hover { background-color: #1E88E5; color: #fff; }
 button:focus, input:focus, textarea:focus { box-shadow: 0 0 0 1px #aaa; }
@@ -336,11 +336,25 @@ button#stop {
 	background: rgb(157, 212, 244) none repeat scroll 0% 0%;
 	font-size: 12px;
 	font-weight: 600;
+  padding: 3px 0;
 }
 
 #progressBar {
 	background: #eff7ff;
 }
+
+#clock {
+	position: fixed;
+	top: 0;
+	right: 0;
+	background: #f42f2f;
+	color: #fff;
+	padding: 10px 20px;
+	margin: 10px;
+	border-radius: 4px;
+	font-weight: 600;
+}
+
 
 /* Toast */
 .toast {
