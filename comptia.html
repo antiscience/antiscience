@@ -199,6 +199,7 @@
       }
       clock.classList.add('hidden');
       clock.innerHTML = '';
+      if (typeof timeInterval  !== 'undefined') clearInterval(timeInterval); 
       showResults();
     }
 
@@ -225,6 +226,7 @@
     }
 
     const timer = (t) => {
+      if (typeof timeInterval  !== 'undefined') clearInterval(timeInterval); 
       const currentTime = Date.parse(new Date());
       const deadline = new Date(currentTime + t*60*1000);
 
@@ -239,7 +241,7 @@
         }
       }
       update(); 
-      let timeInterval = setInterval(update, 1000);
+      timeInterval = setInterval(update, 1000);
     }
 
     init = () => {
