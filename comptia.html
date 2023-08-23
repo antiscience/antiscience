@@ -175,17 +175,18 @@
       state.qeue[state.cursor][1] = answer; 
       showTicker(state.part, state.qeue[state.cursor][0], answer);
 
-      const pos = state.cursor + 1;
-      const progress = Math.round((pos)*100/state.qeue.length) + '%';
+      state.cursor += 1; 
+
+      const progress = Math.round((state.cursor)*100/state.qeue.length) + '%';
       progressBar.style.width = progress;
       progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;' + progress;
-      progressNum.innerHTML = '<span>' + pos + '</span> / ' + state.qeue.length;
+      progressNum.innerHTML = `<span>${state.cursor + 1}</span> /  ${state.qeue.length}`;
 
-      state.cursor += 1; 
       if (state.cursor == state.qeue.length) {
         stop();
         return;
       }
+ 
       showQuestion(state.part, state.qeue[state.cursor][0]);
     }
 
