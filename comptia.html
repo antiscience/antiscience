@@ -41,14 +41,17 @@
   </div>
 
   <div id="ticker" class="hidden"></div>
-  <label for="progress">Progress:</label>
-  <div id="progressBar">
-    <div id="progress">0%</div>
+
+  <div id="progress" class="hidden">
+    <div id="progressDiv">
+      <div id="progressBar"></div>
+    </div>
   </div>
 
   <div id="clock" class="hidden"></div>
 
   <section id="test">
+    <div id="progressNum"></div>
     <div id="id"></div>
     <div id="Question"></div>
     <div id="Options"></div>
@@ -101,7 +104,9 @@
     const optSection = document.querySelector('#Options');
     const resSection = document.querySelector('#result');
     const tickerDiv = document.querySelector('#ticker');
-    const progressBar = document.querySelector('#progress');
+    const progress = document.querySelector('#progress');
+    const progressBar = document.querySelector('#progressBar');
+    const progressNum = document.querySelector('#progressNum');
     const clock = document.querySelector('#clock');
 
     const shuffleArray = array => {
@@ -129,8 +134,14 @@
       tickerDiv.innerHTML = '';
       resSection.classList.remove('active');
       resSection.innerHTML = '';
-      progressBar.style.width = progressBar.innerHTML = '0%';
-      initQeue();
+
+      initQeue(); console.log(` 0 of ${state.qeue.length}`)
+
+      progressBar.style.width = '0%';
+      progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;0%';
+      progressNum.innerHTML = ' <span>1</span> / ' + state.qeue.length;
+      progress.classList.remove('hidden');
+
       showQuestion(state.part, state.qeue[0][0]);
       testSection.classList.add('active');
 
@@ -154,7 +165,7 @@
       question["Answer"] = 'Correct answer: <span>' + question["Answer"] + '</span>';
       question["id"] = 'ID: ' + question["id"];
       for (const field of fields) {
-        field.innerHTML = question[field.id]
+        if (field.id && field.id in question) field.innerHTML = question[field.id]
       }
     }
 
@@ -164,9 +175,11 @@
       state.qeue[state.cursor][1] = answer; 
       showTicker(state.part, state.qeue[state.cursor][0], answer);
 
-      const progress = Math.round((state.cursor + 1)*100/state.qeue.length) + '%';
+      const pos = state.cursor + 1;
+      const progress = Math.round((pos)*100/state.qeue.length) + '%';
       progressBar.style.width = progress;
-      progressBar.innerHTML = progress;
+      progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;' + progress;
+      progressNum.innerHTML = '<span>' + pos + '</span> / ' + state.qeue.length;
 
       state.cursor += 1; 
       if (state.cursor == state.qeue.length) {

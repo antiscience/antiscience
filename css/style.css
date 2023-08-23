@@ -276,7 +276,9 @@ section#test { margin: 20px auto; }
 #id {
 	background: #eee;
 	display: inline-block;
+  float: right;
 	color: #111;
+  font-weight: 600;
 	padding: 5px 10px;
 	border-radius: 4px;
 }
@@ -329,18 +331,33 @@ button#stop {
 	color: #fff;
 }
 
-#progress {
-  width: 0;
-  overflow: visible;
-  white-space: nowrap;
-	background: rgb(157, 212, 244) none repeat scroll 0% 0%;
-	font-size: 12px;
-	font-weight: 600;
-  padding: 3px 0;
+#progressDiv {
+	background: rgb(230, 237, 251);
+	border-radius: 5px;
+  margin: 10px 0;
 }
 
 #progressBar {
-	background: #eff7ff;
+	width: 0;
+	overflow: visible;
+	white-space: nowrap;
+	background: rgb(109, 154, 240);
+	font-weight: 600;
+	padding: 0;
+	color: #000;
+	border-radius: 5px;
+}
+
+#progressNum {
+	background: #353f57;
+	display: inline-block;
+	color: #fff;
+	border-radius: 4px;
+	padding: 5px 10px;
+}
+
+#progressNum > span {
+  font-weight: 900;
 }
 
 #clock {
