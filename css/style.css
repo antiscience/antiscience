@@ -172,9 +172,9 @@ textarea {
 }
 
 @media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */
 }
 
@@ -185,6 +185,7 @@ textarea {
    ========================================================================== */
 
 @media print {
+
   *,
   *::before,
   *::after {
@@ -246,130 +247,257 @@ textarea {
 }
 
 /* Custom */
-body { margin: 0 auto 10px; }
-header { margin: 0 0 20px; }
-h1 { margin-top: 0; }
-h2, h3 { margin-top: 0; margin-bottom: 0; }
-button { background-color: #cde2f4; color: #5377b0; }
-button:hover { background-color: #AED3F4; color: #222; }
-button.active, button.active:hover { background-color: #1E88E5; color: #fff; }
-button:focus, input:focus, textarea:focus { box-shadow: 0 0 0 1px #aaa; }
-section#text button { background-color: #4CAF50; color: #fff;  }
-section { display: none; margin: 20px 0; }
-section.active { display: block; }
-output { display: flex; font-family: monospace; margin: 20px 0; }
-output.text div:nth-child(1) { flex-grow: 0; padding: 20px; background-color: #333; color: #fff; }
-output.text div:nth-child(2) { flex-grow: 1; padding: 20px; background-color: #eee; text-align: center; word-break: break-all; }
-table { table-layout: auto; word-break: break-all; }
-.sha { font-weight: 900; font-size: 1.1em; }
-footer { font-size: small; color: #888; }
-input { display: inline-block; vertical-align: baseline; margin-left: 20px; }
-#test_type { margin: 20px auto;}
-#test_type p { background: #f5f5f5; padding: 20px; }
-label { display: block; }
-#ticker { margin: 0 auto 10px; padding: 5px; background: #f7f7f7; }
-.ticker { display: inline-block; padding: 5px 10px; margin: 1px; color: #fff; border-radius: 4px; }
-.ticker.right { background: #18ba1e; }
-.ticker.wrong { background: #f42828 }
-button#start { background: #4bb70f; color: #fff; font-weight: 600; }
-section#test { margin: 20px auto; }
-#id {
-	background: #eee;
-	display: inline-block;
-  float: right;
-	color: #111;
+body {
+  margin: 0 auto 10px;
+}
+
+header {
+  margin: 0 0 20px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+h2,
+h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+button {
+  background-color: #cde2f4;
+  color: #5377b0;
+}
+
+button:hover {
+  background-color: #AED3F4;
+  color: #222;
+}
+
+button.active,
+button.active:hover {
+  background-color: #1E88E5;
+  color: #fff;
+}
+
+button:focus,
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 1px #aaa;
+}
+
+section#text button {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+section {
+  display: none;
+  margin: 20px 0;
+}
+
+section.active {
+  display: block;
+}
+
+output {
+  display: flex;
+  font-family: monospace;
+  margin: 20px 0;
+}
+
+output.text div:nth-child(1) {
+  flex-grow: 0;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+output.text div:nth-child(2) {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #eee;
+  text-align: center;
+  word-break: break-all;
+}
+
+table {
+  table-layout: auto;
+  word-break: break-all;
+}
+
+.sha {
+  font-weight: 900;
+  font-size: 1.1em;
+}
+
+footer {
+  font-size: small;
+  color: #888;
+}
+
+input {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-left: 20px;
+}
+
+#test_type {
+  margin: 20px auto;
+}
+
+#test_type p {
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+label {
+  display: block;
+}
+
+#ticker {
+  margin: 10px auto;
+  padding: 5px;
+  background: #f7f7f7;
+}
+
+.ticker {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 1px;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.ticker.right {
+  background: #18ba1e;
+}
+
+.ticker.wrong {
+  background: #f42828
+}
+
+button#start {
+  background: #4bb70f;
+  color: #fff;
   font-weight: 600;
-	padding: 5px 10px;
-	border-radius: 4px;
 }
+
+section#test {
+  margin: 40px auto;
+}
+
+#id {
+  background: #eee;
+  float: right;
+  color: #111;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
 #Question {
-	background: #efefef;
-	padding: 30px;
-	margin: 10px auto;
-	border-radius: 4px;
-	color: #000;
+  background: #efefef;
+  padding: 30px;
+  margin: 10px auto;
+  border-radius: 4px;
+  color: #000;
 }
+
 #Options {
-	background: #f4f4f4;
-	padding: 20px 20px 10px;
+  background: #f4f4f4;
+  padding: 20px 20px 10px;
   margin: 0 auto 10px;
   border-radius: 4px;
 }
+
 #Answer {
-	padding: 10px 10px;
-	border-radius: 4px;
-	background: #f5f5f5;
+  padding: 10px 10px;
+  border-radius: 4px;
+  background: #f5f5f5;
   margin: 20px auto 10px;
 }
+
 #Answer span {
-	background: #222;
-	color: #fff;
-	padding: 5px 20px;
-	border-radius: 4px;
-	margin-left: 10px;
+  background: #222;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 4px;
+  margin-left: 10px;
 }
+
 #Explanation {
-	background: #f5f5f5;
-	border-radius: 4px;
-	padding: 20px;
-	margin: 0 auto 20px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 0 auto 20px;
+}
+
+button#submit {
+  background: #353f57;
+  color: #fff;
 }
 
 button#next {
-	background: #111;
-	color: #fff;
+  background: #425fa4;
+  color: #fff;
 }
 
 button#explain {
-	background: #ddd;
-	color: #111;
+  background: #93d585;
+  color: #333;
 }
 
 button#stop {
-	float: right;
-	background: #f23434;
-	color: #fff;
+  float: right;
+  background: #f23434;
+  color: #fff;
 }
 
 #progressDiv {
-	background: rgb(230, 237, 251);
-	border-radius: 5px;
+  background: rgb(230, 237, 251);
+  border-radius: 5px;
   margin: 10px 0;
 }
 
 #progressBar {
-	width: 0;
-	overflow: visible;
-	white-space: nowrap;
-	background: rgb(109, 154, 240);
-	font-weight: 600;
-	padding: 0;
-	color: #000;
-	border-radius: 5px;
+  width: 0;
+  overflow: visible;
+  white-space: nowrap;
+  background: rgb(109, 154, 240);
+  font-weight: 600;
+  padding: 0;
+  color: #000;
+  border-radius: 5px;
 }
 
 #progressNum {
-	background: #353f57;
-	display: inline-block;
-	color: #fff;
-	border-radius: 4px;
-	padding: 5px 10px;
+  background: #353f57;
+  display: inline-block;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
 }
 
-#progressNum > span {
+#progressNum>span {
   font-weight: 900;
 }
 
+#question {
+  margin: 40px 0;
+}
+
 #clock {
-	position: fixed;
-	top: 0;
-	right: 0;
-	background: #f42f2f;
-	color: #fff;
-	padding: 10px 20px;
-	margin: 10px;
-	border-radius: 4px;
-	font-weight: 600;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #f42f2f;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 
