@@ -176,12 +176,9 @@
       showQuestion(state.part, state.qeue[0][0]);
 
       testSection.classList.add('active');
-      questionDiv.classList.remove("hidden");
 
-      if (state.type == "exam") {
-        clock.classList.remove('hidden');
-        timer(state.examTime);
-      }
+      clock.classList.add('hidden');
+      if (state.type == "exam") timer(state.examTime);
     }
 
     showQuestion = (part, index) => {
@@ -201,6 +198,8 @@
         if (field.id && field.id in question) field.innerHTML = question[field.id]
       }
       progressNum.innerHTML = `<span>${state.cursor + 1}</span> /  ${state.qeue.length}`;
+
+      questionDiv.classList.remove("hidden");
     }
 
     const submit = () => {
@@ -246,51 +245,63 @@
     }
 
     const stop = () => {
-      questionDiv.classList.add('hidden');
       disableMenuButtons(false);
-      clock.classList.add('hidden');
-      clock.innerHTML = '';
-      if (typeof timeInterval  !== 'undefined') clearInterval(timeInterval); 
+      timer();
       showResults();
     }
 
     const showResults = () => {
-      const answered = state.type == 'exam' ? state.examSize : state.cursor + 1;
-      if (state.type == 'train' && !answered) return;
-      let right = 0, wrong = 0, noanswer = 0;
+      const all = state.type == 'exam' ? state.examSize : state.cursor + 1;
+      if (state.type == 'train' && !all) return;
+      let right = 0, wrong = 0, noanswer = 0, notshowed = 0;
       for (let i = 0; i <= state.cursor; i++) {
         const answer = state.qeue[i][1];
-        if (answer.length == 0) {
-          noanswer += 1;
-          continue;
-        }
+        if (answer.length == 0) continue;
         const qNum = state.qeue[i][0];
         const correct = Q[state.part][qNum]["Answer"].split(',').sort().join('');
         if (answer == correct) right += 1; else wrong += 1;
       }
-      resSection.innerHTML = `<h1>FINISHED!</h1><h2>Your score: <b>${Math.round(right*100/answered)}</b>% out of ${answered}</h2>
-      <p>No. of questions asked: <b>${state.cursor + 1}</b></p>
-      <p>Correct: <b>${right}</b></p>
-      <p>Wrong: <b>${wrong}</b></p>
-      <p>No answer: <b>${noanswer}</b></p>`;
+      noanswer = all - right - wrong;
+      const max = Math.max(noanswer, wrong, right);
+
+      resSection.innerHTML = `<h1>FINISHED!</h1><h2>Your score: <span>${Math.round(right*100/all)}%</span></h2>
+      <div id="wrapper">
+        <div>
+          <p>&#10033; Number of questions: <span>${all}</span></p>
+          <p>&#10033; Wrong answers: <span style="background: #ee4a4a;">${wrong}</span></p>
+          <p>&#10033; Not answered: <span style="background: #eeee23;">${noanswer}</span></p>
+          <p>&#10033; Correct answers: <span style="background: #49d549;">${right}</span></p>
+        </div>
+        <div id="diagram">
+          <div style="background: #ee4a4a; height:${wrong*100/max}%;">${Math.round(wrong*100/all)}%</div>
+          <div style="background: #eeee23; height:${noanswer*100/max}%;">${Math.round(noanswer*100/all)}%</div>
+          <div style="background: #49d549; height:${right*100/max}%;">${Math.round(right*100/all)}%</div>
+        </div>
+      </div>`;
+
+      questionDiv.classList.add('hidden');
       resSection.classList.add('active');
     }
 
     const timer = (t) => {
       if (typeof timeInterval  !== 'undefined') clearInterval(timeInterval); 
+      if (!t) return;
+
       const currentTime = Date.parse(new Date());
       const deadline = new Date(currentTime + t*60*1000);
 
       const update = () => {
-        const t = Date.parse(deadline) - Date.parse(new Date());
-        const seconds = Math.floor( (t/1000) % 60 ).toString();
-        const minutes = Math.floor( (t/1000) / 60 ).toString();
+        const left = Date.parse(deadline) - Date.parse(new Date());
+        const seconds = Math.floor( (left/1000) % 60 ).toString();
+        const minutes = Math.floor( (left/1000) / 60 ).toString();
         clock.innerHTML = minutes.padStart(2, '0') + ':' + seconds.padStart(2, '0');
-        if ( t <= 0 ) { 
+        if ( left <= 0 ) { 
           clearInterval(timeInterval); 
           stop();
         }
       }
+
+      clock.classList.remove('hidden');
       update(); 
       timeInterval = setInterval(update, 1000);
     }
