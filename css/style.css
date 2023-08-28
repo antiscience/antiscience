@@ -636,7 +636,7 @@ button#stop {
   background-color: #4070f4;
 }
 
-.progress.active:before {
+.toast .progress.active:before {
   animation: progress 5s linear forwards;
 }
 
