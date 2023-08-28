@@ -572,6 +572,22 @@ button#stop {
   transform: translate(-50%,-50%);
 }
 
+#overlay > div > div:last-child {
+  height: 2px;
+  background-color: #7d9bfe;
+  animation: .8s infinite normal loading;
+}
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+
+}
+
 /* Toast */
 .toast {
   position: fixed;
