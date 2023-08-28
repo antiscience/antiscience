@@ -1,7 +1,8 @@
 const state = {
-  data: [],
-  mode: "prod",
-  testSize: 10,
+  data: ["comptia1.json", "comptia2.json"],
+  mode: "test", /* use "test" for testing */
+  testSize: 5,
+  testTime: 3,
   type: 'train',
   part: '1',
   qeue: [],
@@ -24,11 +25,17 @@ async function getData(url) {
 }
 
 const Q = {};
-getData("comptia1.json").then(data => { Q[1] = data});
-getData("comptia2.json").then(data => { Q[2] = data});
+state.data.forEach((url, i) => {
+  getData(url)
+    .then(data => { 
+      Q[i+1] = data;
+      if (Object.keys(Q).length == 2) init();
+    })
+});
 
-const partButtons = document.querySelectorAll('#test_part > button');
-const typeButtons = document.querySelectorAll('button[name="type"]');
+const overlay = document.querySelector("#overlay");
+const partButtons = document.querySelectorAll('#test_part button[name="part"]');
+const typeButtons = document.querySelectorAll('#test_type button[name="type"]');
 const startButton = document.querySelector('button#start');
 const testSection = document.querySelector("section#test");
 const questionDiv = document.querySelector("#question"); 
@@ -59,11 +66,13 @@ const initQeue = () => {
   shuffleArray(state.qeue);
   state.qeue.forEach((el, i) => { state.qeue[i] = [el, ''] })
 
+  if (state.mode == "test") {
+    state.examSize = state.testSize;
+    state.examTime = state.testTime;
+  }
+
   if (state.type == "exam") {
     state.qeue = state.qeue.slice(0, state.examSize);
-  }
-  else if (state.mode == "test") {
-    state.qeue = state.qeue.slice(0, state.testSize);
   }
 
   state.cursor = 0;
@@ -82,6 +91,37 @@ setQuestionMode = (mode) => {
 
   optSection.style.opacity = mode == "submitted" ? "0.5" : "1";
   optSection.style.pointerEvents = mode == "submitted" ? "none" : "initial";
+}
+
+showQuestion = (part, index) => {
+  explainSection.forEach((el) => el.classList.add("hidden"));
+
+  let question = {...Q[part][index]};
+
+  let optHtml = '';
+  let opts = question["Options"];
+  for (const opt in opts) {
+    optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
+  }
+  question["Options"] = optHtml;
+  question["Answer"] = 'Correct answer: <span>' + question["Answer"] + '</span>';
+  question["id"] = 'ID: ' + question["id"];
+  for (const field of fields) {
+    if (field.id && field.id in question) field.innerHTML = question[field.id]
+  }
+  progressNum.innerHTML = `<span>${state.cursor + 1}</span> /  ${state.qeue.length}`;
+
+  questionDiv.classList.remove("hidden");
+}
+
+showTicker = (part, index, answer) => {
+  const correct = Q[part][index]["Answer"].split(',').sort().join(''); 
+  const id = Q[part][index]["id"];
+  const res = correct == answer ? 'right' : 'wrong';
+
+  let tickerHtml = `<a class="ticker ${res}">${id}</a>`;
+  ticker.innerHTML += tickerHtml;
+  if (state.cursor == 0) tickerDiv.classList.remove('hidden');
 }
 
 const start = () => {
@@ -105,27 +145,6 @@ const start = () => {
 
   clock.classList.add('hidden');
   if (state.type == "exam") timer(state.examTime);
-}
-
-showQuestion = (part, index) => {
-  explainSection.forEach((el) => el.classList.add("hidden"));
-
-  let question = {...Q[part][index]};
-
-  let optHtml = '';
-  let opts = question["Options"];
-  for (const opt in opts) {
-    optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
-  }
-  question["Options"] = optHtml;
-  question["Answer"] = 'Correct answer: <span>' + question["Answer"] + '</span>';
-  question["id"] = 'ID: ' + question["id"];
-  for (const field of fields) {
-    if (field.id && field.id in question) field.innerHTML = question[field.id]
-  }
-  progressNum.innerHTML = `<span>${state.cursor + 1}</span> /  ${state.qeue.length}`;
-
-  questionDiv.classList.remove("hidden");
 }
 
 const submit = () => {
@@ -154,16 +173,6 @@ const next = () => {
 
   if (state.type == "train") setQuestionMode("new");
   showQuestion(state.part, state.qeue[state.cursor][0]);
-}
-
-showTicker = (part, index, answer) => {
-  const correct = Q[part][index]["Answer"].split(',').sort().join(''); 
-  const id = Q[part][index]["id"];
-  const res = correct == answer ? 'right' : 'wrong';
-
-  let tickerHtml = `<a class="ticker ${res}">${id}</a>`;
-  ticker.innerHTML += tickerHtml;
-  if (state.cursor == 0) tickerDiv.classList.remove('hidden');
 }
 
 const explain = () => {
@@ -232,24 +241,23 @@ const timer = (t) => {
   timeInterval = setInterval(update, 1000);
 }
 
-(init = () => {
-  const buttonSets = [partButtons, typeButtons];
-  for (const buttonSet of buttonSets) {
-    for (const btn of buttonSet) {
+init = () => {
+  overlay.style.display = 'none';
+
+  [partButtons, typeButtons].forEach((btnSet) => {
+    btnSet.forEach((btn) => {
       btn.addEventListener("click", () => {
         state[btn.name] = btn.value;
-        for (const b of buttonSet) {
-          b.classList.remove("active");
-        }
+        document.querySelector(`button[name=${btn.name}].active`).classList.remove("active");
         btn.classList.add("active");
       })
-    }
-  }
+    })
+  })
 
   submitButton.addEventListener("click", submit);
   nextButton.addEventListener("click", next);
   startButton.addEventListener("click", start);
   explainButton.addEventListener('click', explain);
   stopButton.addEventListener("click", stop);
-})();
+}
 
