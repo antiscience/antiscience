@@ -16,19 +16,15 @@ const typeButtons = document.querySelectorAll('#test_type button[name="type"]');
 const startButton = document.querySelector('button#start');
 const testSection = document.querySelector("section#test");
 const questionDiv = document.querySelector("#question"); 
-const fields = document.querySelectorAll("#question > div"); 
 const nextButton = document.querySelector("button#next");
 const stopButton = document.querySelector("button#stop");
 const submitButton = document.querySelector("button#submit");
 const explainButton = document.querySelector("button#explain");
-const explainSection = document.querySelectorAll('#Explanation, #Answer');
-const optSection = document.querySelector('#Options');
 const resSection = document.querySelector('#result');
 const ticker = document.querySelector('#ticker');
 const tickerDiv = document.querySelector('#tickerDiv');
 const progress = document.querySelector('#progress');
 const progressBar = document.querySelector('#progressBar');
-const progressNum = document.querySelector('#progressNum');
 const clock = document.querySelector('#clock');
 
 const shuffleArray = array => {
@@ -59,35 +55,30 @@ const disableMenuButtons = (flag) => {
   for (const button of [...partButtons, ...typeButtons, startButton]) button.disabled = flag;
 }
 
-const setQuestionMode = (mode) => {
-  let methods = ["add", "remove"];
-  if (mode == "submitted") methods.reverse(); 
-  const [a,b] = methods;
-  for (const button of [nextButton, explainButton]) button.classList[a]("hidden");
-  submitButton.classList[b]("hidden");
-
-  optSection.style.opacity = mode == "submitted" ? "0.5" : "1";
-  optSection.style.pointerEvents = mode == "submitted" ? "none" : "initial";
-}
-
 const showQuestion = (part, index) => {
-  explainSection.forEach((el) => el.classList.add("hidden"));
+  const question = {...Q[part][index]};
 
-  let question = {...Q[part][index]};
+  questionDiv.classList.remove("explain");
+  questionDiv.classList.remove("review");
 
   let optHtml = '';
-  let opts = question["Options"];
+  const opts = question["Options"];
   for (const opt in opts) {
     optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
   }
-  question["Options"] = optHtml;
-  question["Answer"] = 'Correct answer: <span>' + question["Answer"] + '</span>';
-  question["id"] = 'ID: ' + question["id"];
-  for (const field of fields) {
-    if (field.id && field.id in question) field.innerHTML = question[field.id]
-  }
-  progressNum.innerHTML = `<span>${state.cursor + 1}</span> /  ${state.qeue.length}`;
 
+  let html1 = 
+  `<div class="number"><span>${state.cursor + 1}</span> /  ${state.qeue.length}</div>
+   <div class="id">ID: ${question["id"]}</div>
+   <div class="question">${question["Question"]}</div>
+   <div class="options">${optHtml}</div>`
+
+  let html2 = 
+  `<div class="answer">Correct answer: <span>${question["Answer"]}</span></div>
+   <div class="explanation">${question["Explanation"]}</div>`
+
+  questionDiv.firstElementChild.innerHTML = html1;
+  questionDiv.lastElementChild.innerHTML = html2;
   questionDiv.classList.remove("hidden");
 }
 
@@ -103,19 +94,15 @@ const showTicker = (part, index, answer) => {
 
 const start = () => {
   disableMenuButtons(true);
-  setQuestionMode("new");
   tickerDiv.classList.add('hidden');
   ticker.innerHTML = '';
   resSection.classList.remove('active');
   resSection.innerHTML = '';
-
-  initQeue(); 
-
   progressBar.style.width = '0%';
   progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;0%';
-  progressNum.innerHTML = ' <span>1</span> / ' + state.qeue.length;
   progress.classList.remove('hidden');
 
+  initQeue(); 
   showQuestion(state.part, state.qeue[0][0]);
 
   testSection.classList.add('active');
@@ -125,7 +112,7 @@ const start = () => {
 }
 
 const submit = () => {
-  const checked = optSection.querySelectorAll('input[type="checkbox"]:checked');
+  const checked = questionDiv.querySelectorAll('input[type="checkbox"]:checked');
   const answer = Array.from(checked).map(checked => checked.id).sort().join('');
   state.qeue[state.cursor][1] = answer; 
   showTicker(state.part, state.qeue[state.cursor][0], answer);
@@ -135,7 +122,7 @@ const submit = () => {
   progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;' + progress;
 
   if (state.type == "train") 
-    setQuestionMode("submitted"); 
+    questionDiv.classList.add("review");
   else 
     next();
 }
@@ -147,13 +134,11 @@ const next = () => {
   }
 
   state.cursor += 1;
-
-  if (state.type == "train") setQuestionMode("new");
   showQuestion(state.part, state.qeue[state.cursor][0]);
 }
 
 const explain = () => {
-  explainSection.forEach((el) => el.classList.toggle("hidden"));
+  questionDiv.classList.toggle("explain");
 }
 
 const stop = () => {
