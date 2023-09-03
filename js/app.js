@@ -10,29 +10,6 @@ const state = {
   examTime: 60
 }
 
-async function getData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  }
-  catch (err) {
-    document.querySelector("#error").innerHTML = err + 
-    '<br>Something went wrong or there is a problem with your internet connection. Please try again later.';
-  }
-}
-
-const Q = {};
-state.data.forEach((url, i) => {
-  getData(url)
-    .then(data => { 
-      Q[i+1] = data;
-      if (Object.keys(Q).length == 2) init();
-    })
-});
-
 const overlay = document.querySelector("#overlay");
 const partButtons = document.querySelectorAll('#test_part button[name="part"]');
 const typeButtons = document.querySelectorAll('#test_type button[name="type"]');
@@ -78,11 +55,11 @@ const initQeue = () => {
   state.cursor = 0;
 }
 
-disableMenuButtons = (flag) => {
+const disableMenuButtons = (flag) => {
   for (const button of [...partButtons, ...typeButtons, startButton]) button.disabled = flag;
 }
 
-setQuestionMode = (mode) => {
+const setQuestionMode = (mode) => {
   let methods = ["add", "remove"];
   if (mode == "submitted") methods.reverse(); 
   const [a,b] = methods;
@@ -93,7 +70,7 @@ setQuestionMode = (mode) => {
   optSection.style.pointerEvents = mode == "submitted" ? "none" : "initial";
 }
 
-showQuestion = (part, index) => {
+const showQuestion = (part, index) => {
   explainSection.forEach((el) => el.classList.add("hidden"));
 
   let question = {...Q[part][index]};
@@ -114,7 +91,7 @@ showQuestion = (part, index) => {
   questionDiv.classList.remove("hidden");
 }
 
-showTicker = (part, index, answer) => {
+const showTicker = (part, index, answer) => {
   const correct = Q[part][index]["Answer"].split(',').sort().join(''); 
   const id = Q[part][index]["id"];
   const res = correct == answer ? 'right' : 'wrong';
@@ -241,7 +218,7 @@ const timer = (t) => {
   timeInterval = setInterval(update, 1000);
 }
 
-init = () => {
+const init = () => {
   overlay.style.display = 'none';
 
   [partButtons, typeButtons].forEach((btnSet) => {
@@ -261,3 +238,25 @@ init = () => {
   stopButton.addEventListener("click", stop);
 }
 
+const getData = async (url) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  }
+  catch (err) {
+    document.querySelector("#banner").innerHTML = err + 
+    '<br>Something went wrong or there is a problem with your internet connection. Please try again later.';
+  }
+}
+
+const Q = {};
+state.data.forEach((url, i) => {
+  getData(url)
+    .then(data => { 
+      Q[i+1] = data;
+      if (Object.keys(Q).length == state.data.length) init();
+    })
+})
