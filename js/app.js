@@ -55,31 +55,37 @@ const disableMenuButtons = (flag) => {
   for (const button of [...partButtons, ...typeButtons, startButton]) button.disabled = flag;
 }
 
-const showQuestion = (part, index) => {
+const showQuestion = (part, index, target) => {
   const question = {...Q[part][index]};
-
-  questionDiv.classList.remove("explain");
-  questionDiv.classList.remove("review");
-
-  let optHtml = '';
-  const opts = question["Options"];
-  for (const opt in opts) {
-    optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
-  }
 
   let html1 = 
   `<div class="number"><span>${state.cursor + 1}</span> /  ${state.qeue.length}</div>
    <div class="id">ID: ${question["id"]}</div>
-   <div class="question">${question["Question"]}</div>
-   <div class="options">${optHtml}</div>`
+   <div class="question">${question["Question"]}</div>`
 
-  let html2 = 
-  `<div class="answer">Correct answer: <span>${question["Answer"]}</span></div>
-   <div class="explanation">${question["Explanation"]}</div>`
+   let html2 = 
+   `<div class="answer">Correct answer: <span>${question["Answer"]}</span></div>
+    <div class="explanation">${question["Explanation"]}</div>`
+ 
+  if (!target) {
+    questionDiv.classList.remove("explain");
+    questionDiv.classList.remove("review");
 
-  questionDiv.firstElementChild.innerHTML = html1;
-  questionDiv.lastElementChild.innerHTML = html2;
-  questionDiv.classList.remove("hidden");
+    let optHtml = '';
+    const opts = question["Options"];
+    for (const opt in opts) {
+      optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
+    }
+
+    html1 += `<div class="options">${optHtml}</div>`;
+
+    questionDiv.firstElementChild.innerHTML = html1;
+    questionDiv.lastElementChild.innerHTML = html2;
+    questionDiv.classList.remove("hidden");
+  }
+  else {
+    target.innerHTML = html1 + html2;
+  }
 }
 
 const showTicker = (part, index, answer) => {
