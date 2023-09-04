@@ -1,6 +1,6 @@
 const state = {
   data: ["comptia1.json", "comptia2.json"],
-  mode: "prod", /* use "test" for testing */
+  mode: "test", /* use "test" for testing */
   testSize: 5,
   testTime: 3,
   type: 'train',
