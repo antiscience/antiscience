@@ -21,11 +21,12 @@
   <meta name="theme-color" content="#fafafa">
 </head>
 
-<body>
-  <div id="overlay">
-    <div id="banner">
-      <div>Loading tests...</div>
-      <div></div>
+<body class="overlay">
+  <div id="overlay" class="banner">
+    <span href="#" class="close">×</span>
+    <div id="overlay-content">
+      <div style="font-size: 24px;">Loading tests...</div>
+      <div class="loader"></div>
     </div>
   </div>
   
@@ -49,12 +50,12 @@
   </div>
 
   <section id="test">
-    <div id="tickerDiv" class="hidden">Answered question IDs:
+    <div id="tickerDiv" class="hidden">Answered questions (click the ID to view):
       <div id="ticker"></div>
     </div>
 
-    <div id="progress" class="hidden">Your progress:
-      <div id="progressDiv">
+    <div id="progressDiv" class="hidden">Your progress:
+      <div>
         <div id="progressBar"></div>
       </div>
     </div>
@@ -62,20 +63,14 @@
     <div id="clock" class="hidden"></div>
 
     <div id="question">
-      <div id="progressNum"></div>
-      <div id="id"></div>
-      <div id="Question"></div>
-      <div id="Options"></div>
-    
+      <div></div>
       <div id="buttons">
         <button type="button" id="submit">Submit</button>
-        <button type="button" id="next" class="hidden">Next &#9655;</button>
-        <button type="button" id="explain" class="hidden">Explain</button>
+        <button type="button" id="next">Next &#9655;</button>
+        <button type="button" id="explain">Explain</button>
         <button type="button" id="stop">Exit & Stats</button>
       </div>
-    
-      <div id="Answer" class="hidden"></div>
-      <div id="Explanation" class="hidden"></div>
+      <div></div>
     </div>
   </section>
 
@@ -98,5 +93,6 @@
 
   <script defer src="js/vendor/modernizr-3.12.0.min.js"></script>
   <script defer src="js/app.js"></script>
+  <script defer src="js/toast.js"></script>
 </body>
 </html>

@@ -11,24 +11,22 @@ const state = {
 }
 
 const overlay = document.querySelector("#overlay");
+const overlayClose = document.querySelector("#overlay .close");
+const overlayContent = document.querySelector("#overlay-content");
 const partButtons = document.querySelectorAll('#test_part button[name="part"]');
 const typeButtons = document.querySelectorAll('#test_type button[name="type"]');
 const startButton = document.querySelector('button#start');
 const testSection = document.querySelector("section#test");
 const questionDiv = document.querySelector("#question"); 
-const fields = document.querySelectorAll("#question > div"); 
 const nextButton = document.querySelector("button#next");
 const stopButton = document.querySelector("button#stop");
 const submitButton = document.querySelector("button#submit");
 const explainButton = document.querySelector("button#explain");
-const explainSection = document.querySelectorAll('#Explanation, #Answer');
-const optSection = document.querySelector('#Options');
 const resSection = document.querySelector('#result');
 const ticker = document.querySelector('#ticker');
 const tickerDiv = document.querySelector('#tickerDiv');
-const progress = document.querySelector('#progress');
+const progressDiv = document.querySelector('#progressDiv');
 const progressBar = document.querySelector('#progressBar');
-const progressNum = document.querySelector('#progressNum');
 const clock = document.querySelector('#clock');
 
 const shuffleArray = array => {
@@ -59,36 +57,36 @@ const disableMenuButtons = (flag) => {
   for (const button of [...partButtons, ...typeButtons, startButton]) button.disabled = flag;
 }
 
-const setQuestionMode = (mode) => {
-  let methods = ["add", "remove"];
-  if (mode == "submitted") methods.reverse(); 
-  const [a,b] = methods;
-  for (const button of [nextButton, explainButton]) button.classList[a]("hidden");
-  submitButton.classList[b]("hidden");
+const showQuestion = (part, index, target) => {
+  const question = {...Q[part][index]};
 
-  optSection.style.opacity = mode == "submitted" ? "0.5" : "1";
-  optSection.style.pointerEvents = mode == "submitted" ? "none" : "initial";
-}
-
-const showQuestion = (part, index) => {
-  explainSection.forEach((el) => el.classList.add("hidden"));
-
-  let question = {...Q[part][index]};
+  let html1 = 
+   `<div class="id">ID: ${question["id"]}</div>
+   <div class="question">${question["Question"]}</div>`
 
   let optHtml = '';
-  let opts = question["Options"];
+  const dis = target ? ' disabled' : '';
+  const opts = question["Options"];
   for (const opt in opts) {
-    optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
+    optHtml += `<label><input type="checkbox" name="${opt}"${dis}>${opt}. ${opts[opt]}</label>`;
   }
-  question["Options"] = optHtml;
-  question["Answer"] = 'Correct answer: <span>' + question["Answer"] + '</span>';
-  question["id"] = 'ID: ' + question["id"];
-  for (const field of fields) {
-    if (field.id && field.id in question) field.innerHTML = question[field.id]
-  }
-  progressNum.innerHTML = `<span>${state.cursor + 1}</span> /  ${state.qeue.length}`;
+  html1 += `<div class="options">${optHtml}</div>`;
 
-  questionDiv.classList.remove("hidden");
+  let html2 = 
+  `<div class="answer">Correct answer: <span>${question["Answer"]}</span></div>
+   <div class="explanation">${question["Explanation"]}</div>`;
+ 
+  if (!target) {
+    html1 = `<div class="number"><span>${state.cursor + 1}</span> /  ${state.qeue.length}</div>` + html1;
+    questionDiv.classList.remove("explain");
+    questionDiv.classList.remove("review");
+    questionDiv.firstElementChild.innerHTML = html1;
+    questionDiv.lastElementChild.innerHTML = html2;
+    questionDiv.classList.remove("hidden");
+  }
+  else {
+    target.innerHTML = html1 + html2;
+  }
 }
 
 const showTicker = (part, index, answer) => {
@@ -103,19 +101,15 @@ const showTicker = (part, index, answer) => {
 
 const start = () => {
   disableMenuButtons(true);
-  setQuestionMode("new");
   tickerDiv.classList.add('hidden');
   ticker.innerHTML = '';
   resSection.classList.remove('active');
   resSection.innerHTML = '';
-
-  initQeue(); 
-
   progressBar.style.width = '0%';
   progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;0%';
-  progressNum.innerHTML = ' <span>1</span> / ' + state.qeue.length;
-  progress.classList.remove('hidden');
+  progressDiv.classList.remove('hidden');
 
+  initQeue(); 
   showQuestion(state.part, state.qeue[0][0]);
 
   testSection.classList.add('active');
@@ -125,8 +119,8 @@ const start = () => {
 }
 
 const submit = () => {
-  const checked = optSection.querySelectorAll('input[type="checkbox"]:checked');
-  const answer = Array.from(checked).map(checked => checked.id).sort().join('');
+  const checked = questionDiv.querySelectorAll('input[type="checkbox"]:checked');
+  const answer = Array.from(checked).map(checked => checked.name).sort().join('');
   state.qeue[state.cursor][1] = answer; 
   showTicker(state.part, state.qeue[state.cursor][0], answer);
 
@@ -135,7 +129,7 @@ const submit = () => {
   progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;' + progress;
 
   if (state.type == "train") 
-    setQuestionMode("submitted"); 
+    questionDiv.classList.add("review");
   else 
     next();
 }
@@ -147,13 +141,11 @@ const next = () => {
   }
 
   state.cursor += 1;
-
-  if (state.type == "train") setQuestionMode("new");
   showQuestion(state.part, state.qeue[state.cursor][0]);
 }
 
 const explain = () => {
-  explainSection.forEach((el) => el.classList.toggle("hidden"));
+  questionDiv.classList.toggle("explain");
 }
 
 const stop = () => {
@@ -218,8 +210,19 @@ const timer = (t) => {
   timeInterval = setInterval(update, 1000);
 }
 
+const tickerClick = (e) => {
+  e.preventDefault();
+  const a = e.target;
+  if (a.tagName != "A") return false;
+  const id = a.textContent;
+
+  document.body.classList.add("overlay");
+  showQuestion(state.part, id, overlayContent);
+}
+
 const init = () => {
-  overlay.style.display = 'none';
+  document.body.classList.remove("overlay");
+  overlay.classList.remove("banner");
 
   [partButtons, typeButtons].forEach((btnSet) => {
     btnSet.forEach((btn) => {
@@ -236,6 +239,8 @@ const init = () => {
   startButton.addEventListener("click", start);
   explainButton.addEventListener('click', explain);
   stopButton.addEventListener("click", stop);
+  ticker.addEventListener("click", tickerClick);
+  overlayClose.addEventListener("click", () => { document.body.classList.remove("overlay"); overlayContent.innerHTML = ''; })
 }
 
 const getData = async (url) => {
@@ -247,7 +252,7 @@ const getData = async (url) => {
     return response.json();
   }
   catch (err) {
-    document.querySelector("#banner").innerHTML = err + 
+    overlayContent.innerHTML = err + 
     '<br>Something went wrong or there is a problem with your internet connection. Please try again later.';
   }
 }

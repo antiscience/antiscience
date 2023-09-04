@@ -257,6 +257,10 @@ body {
   margin: 0 auto;
 }
 
+body.overlay {
+  overflow: hidden;
+}
+
 .content {
   flex: 1 0 auto;
 }
@@ -371,8 +375,6 @@ label {
 
 #ticker {
   margin: 10px auto;
-  padding: 5px;
-  background: #f7f7f7;
 }
 
 .ticker {
@@ -381,6 +383,7 @@ label {
   margin: 1px;
   color: #fff;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .ticker.right {
@@ -401,7 +404,7 @@ section#test {
   margin: 40px auto;
 }
 
-#id {
+.id {
   background: #eee;
   float: right;
   color: #111;
@@ -410,29 +413,44 @@ section#test {
   border-radius: 4px;
 }
 
-#Question {
-  background: #efefef;
+.question {
+  background: #f5f5f5;
   padding: 30px;
   margin: 10px auto;
   border-radius: 4px;
   color: #000;
 }
 
-#Options {
+.options {
   background: #f4f4f4;
   padding: 20px 20px 10px;
   margin: 0 auto 10px;
   border-radius: 4px;
+  opacity: 1;
+  pointer-events: all;
 }
 
-#Answer {
+#question.review .options {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.answer {
   padding: 10px 10px;
   border-radius: 4px;
   background: #f5f5f5;
   margin: 20px auto 10px;
 }
 
-#Answer span {
+#question .answer {
+  display: none;
+}
+
+#question.explain .answer {
+  display: block;
+}
+
+.answer span {
   background: #222;
   color: #fff;
   padding: 5px 20px;
@@ -440,11 +458,19 @@ section#test {
   margin-left: 10px;
 }
 
-#Explanation {
+.explanation {
   background: #f5f5f5;
   border-radius: 4px;
   padding: 20px;
   margin: 0 auto 20px;
+}
+
+#question .explanation {
+  display: none;
+}
+
+#question.explain .explanation {
+  display: block;
 }
 
 button#submit {
@@ -452,14 +478,28 @@ button#submit {
   color: #fff;
 }
 
+#question.review button#submit {
+  display: none;
+}
+
 button#next {
+  display: none;
   background: #425fa4;
   color: #fff;
 }
 
+#question.review button#next {
+  display: initial;
+}
+
 button#explain {
+  display: none;
   background: #93d585;
   color: #333;
+}
+
+#question.review button#explain {
+  display: initial;
 }
 
 button#stop {
@@ -468,7 +508,7 @@ button#stop {
   color: #fff;
 }
 
-#progressDiv {
+#progressDiv > div {
   background: rgb(230, 237, 251);
   border-radius: 5px;
   margin: 10px 0;
@@ -485,7 +525,7 @@ button#stop {
   border-radius: 5px;
 }
 
-#progressNum {
+.number {
   background: #353f57;
   display: inline-block;
   color: #fff;
@@ -493,7 +533,7 @@ button#stop {
   padding: 5px 10px;
 }
 
-#progressNum>span {
+.number > span {
   font-weight: 900;
 }
 
@@ -565,7 +605,7 @@ button#stop {
 
 #overlay {
   position: fixed; 
-  display: block; 
+  display: none; 
   width: 100%;
   height: 100%; 
   top: 0;
@@ -573,23 +613,52 @@ button#stop {
   right: 0;
   bottom: 0;
   background-color: #efefef; 
-  z-index: 2; 
+  z-index: 2;
+  overflow-y: auto;
 }
 
-#overlay > div {
+.overlay #overlay {
+  display: block;
+}
+
+#overlay-content {
+  position: static;
+  margin: 50px auto;
+  width: 600px;
+  color: #222;
+}
+
+#overlay.banner #overlay-content {
   position: absolute;
+  margin: 0;
   top: 50%;
   left: 50%;
-  font-size: 24px;
-  color: #222;
   transform: translate(-50%,-50%);
+  width: auto;
 }
 
-#overlay > div > div:last-child {
+#overlay .loader {
   height: 2px;
   background-color: #7d9bfe;
   animation: .8s infinite normal loading;
 }
+
+#overlay .close {
+  display: initial;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 20px 10px;
+  cursor: pointer;
+  color: #333;
+  font-size: 50px;
+  line-height: 0;
+}
+
+#overlay.banner .close {
+  display: none;
+}
+
 
 @keyframes loading {
   0% {
