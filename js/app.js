@@ -61,8 +61,7 @@ const showQuestion = (part, index, target) => {
   const question = {...Q[part][index]};
 
   let html1 = 
-  `<div class="number"><span>${state.cursor + 1}</span> /  ${state.qeue.length}</div>
-   <div class="id">ID: ${question["id"]}</div>
+   `<div class="id">ID: ${question["id"]}</div>
    <div class="question">${question["Question"]}</div>`
 
   let optHtml = '';
@@ -78,6 +77,7 @@ const showQuestion = (part, index, target) => {
    <div class="explanation">${question["Explanation"]}</div>`;
  
   if (!target) {
+    html1 = `<div class="number"><span>${state.cursor + 1}</span> /  ${state.qeue.length}</div>` + html1;
     questionDiv.classList.remove("explain");
     questionDiv.classList.remove("review");
     questionDiv.firstElementChild.innerHTML = html1;
