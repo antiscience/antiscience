@@ -39,7 +39,7 @@ const shuffleArray = array => {
 const initQeue = () => {
   state.qeue = [...Array(Q[state.part].length).keys()];
   shuffleArray(state.qeue);
-  state.qeue.forEach((el, i) => { state.qeue[i] = [el, ''] })
+  state.qeue.forEach((el, i) => state.qeue[i] = [el, '']);
 
   if (state.mode == "test") {
     state.examSize = state.testSize;
@@ -97,6 +97,17 @@ const showTicker = (part, index, answer) => {
   let tickerHtml = `<a class="ticker ${res}">${id}</a>`;
   ticker.innerHTML += tickerHtml;
   if (state.cursor == 0) tickerDiv.classList.remove('hidden');
+}
+
+const tickerClick = (e) => {
+  e.preventDefault();
+  const a = e.target;
+  if (a.tagName != "A") return false;
+  const id = a.textContent;
+  const index = Q[state.part].findIndex(el => el.id == id);
+
+  document.body.classList.add("overlay");
+  showQuestion(state.part, index, overlayContent);
 }
 
 const start = () => {
@@ -208,16 +219,6 @@ const timer = (t) => {
   clock.classList.remove('hidden');
   update(); 
   timeInterval = setInterval(update, 1000);
-}
-
-const tickerClick = (e) => {
-  e.preventDefault();
-  const a = e.target;
-  if (a.tagName != "A") return false;
-  const id = a.textContent;
-
-  document.body.classList.add("overlay");
-  showQuestion(state.part, id, overlayContent);
 }
 
 const init = () => {
