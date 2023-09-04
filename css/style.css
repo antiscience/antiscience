@@ -510,7 +510,7 @@ button#stop {
   color: #fff;
 }
 
-#progressDiv {
+#progressDiv > div {
   background: rgb(230, 237, 251);
   border-radius: 5px;
   margin: 10px 0;
@@ -623,14 +623,6 @@ button#stop {
   display: block;
 }
 
-#overlay-content.banner {
-  position: absolute;
-  margin: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-}
-
 #overlay-content {
   position: static;
   margin: 50px auto;
@@ -638,11 +630,37 @@ button#stop {
   color: #222;
 }
 
+#overlay.banner #overlay-content {
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: auto;
+}
+
 #overlay .loader {
   height: 2px;
   background-color: #7d9bfe;
   animation: .8s infinite normal loading;
 }
+
+#overlay .close {
+  display: initial;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 20px 10px;
+  cursor: pointer;
+  color: #333;
+  font-size: 50px;
+  line-height: 0;
+}
+
+#overlay.banner .close {
+  display: none;
+}
+
 
 @keyframes loading {
   0% {

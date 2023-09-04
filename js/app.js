@@ -11,6 +11,7 @@ const state = {
 }
 
 const overlay = document.querySelector("#overlay");
+const overlayClose = document.querySelector("#overlay .close");
 const overlayContent = document.querySelector("#overlay-content");
 const partButtons = document.querySelectorAll('#test_part button[name="part"]');
 const typeButtons = document.querySelectorAll('#test_type button[name="type"]');
@@ -24,7 +25,7 @@ const explainButton = document.querySelector("button#explain");
 const resSection = document.querySelector('#result');
 const ticker = document.querySelector('#ticker');
 const tickerDiv = document.querySelector('#tickerDiv');
-const progress = document.querySelector('#progress');
+const progressDiv = document.querySelector('#progressDiv');
 const progressBar = document.querySelector('#progressBar');
 const clock = document.querySelector('#clock');
 
@@ -64,22 +65,21 @@ const showQuestion = (part, index, target) => {
    <div class="id">ID: ${question["id"]}</div>
    <div class="question">${question["Question"]}</div>`
 
-   let html2 = 
-   `<div class="answer">Correct answer: <span>${question["Answer"]}</span></div>
-    <div class="explanation">${question["Explanation"]}</div>`
+  let optHtml = '';
+  const dis = target ? ' disabled' : '';
+  const opts = question["Options"];
+  for (const opt in opts) {
+    optHtml += `<label><input type="checkbox" name="${opt}"${dis}>${opt}. ${opts[opt]}</label>`;
+  }
+  html1 += `<div class="options">${optHtml}</div>`;
+
+  let html2 = 
+  `<div class="answer">Correct answer: <span>${question["Answer"]}</span></div>
+   <div class="explanation">${question["Explanation"]}</div>`;
  
   if (!target) {
     questionDiv.classList.remove("explain");
     questionDiv.classList.remove("review");
-
-    let optHtml = '';
-    const opts = question["Options"];
-    for (const opt in opts) {
-      optHtml += `<label><input type="checkbox" name="${opt}" id="${opt}">${opt}. ${opts[opt]}</label>`;
-    }
-
-    html1 += `<div class="options">${optHtml}</div>`;
-
     questionDiv.firstElementChild.innerHTML = html1;
     questionDiv.lastElementChild.innerHTML = html2;
     questionDiv.classList.remove("hidden");
@@ -107,7 +107,7 @@ const start = () => {
   resSection.innerHTML = '';
   progressBar.style.width = '0%';
   progressBar.innerHTML = '&nbsp;&nbsp;&nbsp;0%';
-  progress.classList.remove('hidden');
+  progressDiv.classList.remove('hidden');
 
   initQeue(); 
   showQuestion(state.part, state.qeue[0][0]);
@@ -120,7 +120,7 @@ const start = () => {
 
 const submit = () => {
   const checked = questionDiv.querySelectorAll('input[type="checkbox"]:checked');
-  const answer = Array.from(checked).map(checked => checked.id).sort().join('');
+  const answer = Array.from(checked).map(checked => checked.name).sort().join('');
   state.qeue[state.cursor][1] = answer; 
   showTicker(state.part, state.qeue[state.cursor][0], answer);
 
@@ -222,7 +222,7 @@ const tickerClick = (e) => {
 
 const init = () => {
   document.body.classList.remove("overlay");
-  overlayContent.classList.remove("banner");
+  overlay.classList.remove("banner");
 
   [partButtons, typeButtons].forEach((btnSet) => {
     btnSet.forEach((btn) => {
@@ -239,7 +239,8 @@ const init = () => {
   startButton.addEventListener("click", start);
   explainButton.addEventListener('click', explain);
   stopButton.addEventListener("click", stop);
-  ticker.addEventListener("click", tickerClick)
+  ticker.addEventListener("click", tickerClick);
+  overlayClose.addEventListener("click", () => { document.body.classList.remove("overlay"); overlayContent.innerHTML = ''; })
 }
 
 const getData = async (url) => {
