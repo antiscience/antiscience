@@ -381,17 +381,21 @@ label {
   display: inline-block;
   padding: 5px 10px;
   margin: 1px;
-  color: #fff;
+  color: #121212;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .ticker.right {
-  background: #18ba1e;
+  background: #49d549;
 }
 
 .ticker.wrong {
-  background: #f42828
+  background: #ee4a4a
+}
+
+.ticker.noanswer {
+  background: #eeee23;
 }
 
 button#start {
@@ -624,7 +628,7 @@ button#stop {
 #overlay-content {
   position: static;
   margin: 50px auto;
-  width: 600px;
+  max-width: 600px;
   color: #222;
 }
 
@@ -646,8 +650,8 @@ button#stop {
 #overlay .close {
   display: initial;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 0;
+  right: 0;
   padding: 20px 10px;
   cursor: pointer;
   color: #333;

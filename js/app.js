@@ -90,9 +90,15 @@ const showQuestion = (part, index, target) => {
 }
 
 const showTicker = (part, index, answer) => {
-  const correct = Q[part][index]["Answer"].split(',').sort().join(''); 
   const id = Q[part][index]["id"];
-  const res = correct == answer ? 'right' : 'wrong';
+  let correct, res;
+  if (answer.length) {
+    correct = Q[part][index]["Answer"].split(',').sort().join(''); 
+    res = correct == answer ? 'right' : 'wrong';
+  }
+  else {
+    res = 'noanswer';
+  }
 
   let tickerHtml = `<a class="ticker ${res}">${id}</a>`;
   ticker.innerHTML += tickerHtml;
