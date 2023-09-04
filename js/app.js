@@ -11,6 +11,7 @@ const state = {
 }
 
 const overlay = document.querySelector("#overlay");
+const overlayContent = document.querySelector("#overlay-content");
 const partButtons = document.querySelectorAll('#test_part button[name="part"]');
 const typeButtons = document.querySelectorAll('#test_type button[name="type"]');
 const startButton = document.querySelector('button#start');
@@ -209,8 +210,19 @@ const timer = (t) => {
   timeInterval = setInterval(update, 1000);
 }
 
+const tickerClick = (e) => {
+  e.preventDefault();
+  const a = e.target;
+  if (a.tagName != "A") return false;
+  const id = a.textContent;
+
+  document.body.classList.add("overlay");
+  showQuestion(state.part, id, overlayContent);
+}
+
 const init = () => {
-  overlay.style.display = 'none';
+  document.body.classList.remove("overlay");
+  overlayContent.classList.remove("banner");
 
   [partButtons, typeButtons].forEach((btnSet) => {
     btnSet.forEach((btn) => {
@@ -227,6 +239,7 @@ const init = () => {
   startButton.addEventListener("click", start);
   explainButton.addEventListener('click', explain);
   stopButton.addEventListener("click", stop);
+  ticker.addEventListener("click", tickerClick)
 }
 
 const getData = async (url) => {
@@ -238,7 +251,7 @@ const getData = async (url) => {
     return response.json();
   }
   catch (err) {
-    document.querySelector("#banner").innerHTML = err + 
+    overlayContent.innerHTML = err + 
     '<br>Something went wrong or there is a problem with your internet connection. Please try again later.';
   }
 }
