@@ -218,6 +218,8 @@ const G = { cy: null, Matrix: null, Gdata: null }
 const size_input = document.getElementById("graph_size");
 const draw = document.getElementById("draw");
 const start = document.getElementById("start");
+const dest = document.getElementById("dest");
+const path = document.getElementById("path");
 
 draw.addEventListener("click", () => {
 
@@ -232,5 +234,13 @@ draw.addEventListener("click", () => {
 
 start.addEventListener("click", () => {
 
-    Dijkstra(G.Matrix, 0);
+    G.res = Dijkstra(G.Matrix, 0);
 })
+
+path.addEventListener("click", () => {
+
+    const dest = parseInt(dest.value); 
+    const path = Gpath(dest, G.res.Hops);
+
+})
+   
