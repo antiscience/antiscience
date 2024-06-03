@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Towers of Hanoi*</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="fav/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="css/hanoi.css">
+</head>
+
+<body>
+    <header>
+        <h1>Hanoi*</h1> 
+            <label><input id="height" type="number" min="3" max="20" value="5"></label>
+            <div id="count">0</div>
+            <button id="start" type="button" class="start">Start</button>
+
+            <a id="reset" href="/hanoi/">Reset</a>
+            <a id="about" href="/hanoi/">About</a>
+    </header>
+
+    <div id="aboutDiv" class="modal hidden">
+        <div class="close">Close</div>
+            <p>1. Black plays first, but it must be a move to the center square (h7).</p>
+            <p>2. White can make any moves without restriction from the beginning.</p>
+            <p>3. Black's 2nd move must be out of 5x5 square at the center, no restrictions thereafter.</p>
+            <p>4. To win you need to form an unbroken line of 5 squares horizontally, vertically or diagonally.</p>
+            <p>5. If you win > 50% out of 10 games aginst yourself you get a prize</p>
+         </div>
+    </div>
+
+    <div id="wrapper">
+        <div id="rod-1"></div>
+        <div id="rod-2"></div>
+        <div id="rod-3"></div>
+    </div>
+	
+    <script>
+        (() => {
+            document.getElementById("reset")
+                .addEventListener('click', e => 
+                    { 
+                        e.preventDefault();
+                        Game.reset();
+                    });
+
+            document.getElementById("about")
+            .addEventListener('click', e => 
+                { 
+                    e.preventDefault();
+                    const about = document.getElementById('aboutDiv');
+                    about.classList.remove('hidden');
+                });
+
+            [...document.querySelectorAll(".close")].map(el =>
+                {
+                    el.addEventListener('click', e => 
+                    { 
+                        e.preventDefault();
+                        el.parentNode.classList.add('hidden');
+                    })
+                })
+            }
+        )()
+
+    </script>
+    <script src="js/hanoi.js"></script>
+</body>
+</html>

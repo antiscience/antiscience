@@ -1,0 +1,773 @@
+/*! HTML5 Boilerplate v8.0.0 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 3.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  /* 1 */
+}
+
+/*
+ * Extends the .visually-hidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visually-hidden.focusable:active,
+.visually-hidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  white-space: inherit;
+  width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * The use of `table` rather than `block` is only necessary if using
+ * `::before` to contain the top-margins of child elements.
+ */
+
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+
+  *,
+  *::before,
+  *::after {
+    background: #fff !important;
+    color: #000 !important;
+    /* Black prints faster */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+/* Custom */
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+body.overlay {
+  overflow: hidden;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+header {
+  margin: 0 0 40px;
+}
+
+h1 {
+  color: #616161;
+}
+
+h2,
+h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #616161;
+}
+
+button {
+  background-color: #cde2f4;
+  color: #5377b0;
+}
+
+button:hover {
+  background-color: #AED3F4;
+  color: #222;
+}
+
+button.active,
+button.active:hover {
+  background-color: #1E88E5;
+  color: #fff;
+}
+
+button:focus,
+input:focus {
+  box-shadow: none;
+}
+textarea:focus {
+  box-shadow: 0 0 0 1px #aaa;
+}
+
+section#text button {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+section {
+  display: none;
+  margin: 20px 0;
+}
+
+section.active {
+  display: block;
+}
+
+output {
+  display: flex;
+  font-family: monospace;
+  margin: 20px 0;
+}
+
+output.text div:nth-child(1) {
+  flex-grow: 0;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+output.text div:nth-child(2) {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #eee;
+  text-align: center;
+  word-break: break-all;
+}
+
+table {
+  table-layout: auto;
+  word-break: break-all;
+}
+
+.sha {
+  font-weight: 900;
+  font-size: 1.1em;
+}
+
+footer {
+  flex-shrink: 0;
+  padding: 20px;
+  font-size: small;
+  color: #888;
+}
+
+input {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 20px;
+}
+
+#test_type {
+  margin: 20px auto;
+}
+
+#test_type p {
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+label {
+  display: block;
+}
+
+#ticker {
+  margin: 10px auto;
+}
+
+.ticker {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 1px;
+  color: #121212;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ticker.right {
+  background: #49d549;
+}
+
+.ticker.wrong {
+  background: #ee4a4a
+}
+
+.ticker.noanswer {
+  background: #eeee23;
+}
+
+button#start {
+  background: #4bb70f;
+  color: #fff;
+  font-weight: 600;
+}
+
+section#test {
+  margin: 40px auto;
+}
+
+.id {
+  background: #eee;
+  float: right;
+  color: #111;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.question {
+  background: #f5f5f5;
+  padding: 30px;
+  margin: 10px auto;
+  border-radius: 4px;
+  color: #000;
+}
+
+.options {
+  background: #f4f4f4;
+  padding: 20px 20px 10px;
+  margin: 0 auto 10px;
+  border-radius: 4px;
+  opacity: 1;
+  pointer-events: all;
+}
+
+#question.review .options {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.answer {
+  padding: 10px 10px;
+  border-radius: 4px;
+  background: #f5f5f5;
+  margin: 20px auto 10px;
+}
+
+#question .answer {
+  display: none;
+}
+
+#question.explain .answer {
+  display: block;
+}
+
+.answer span {
+  background: #222;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.explanation {
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 0 auto 20px;
+}
+
+#question .explanation {
+  display: none;
+}
+
+#question.explain .explanation {
+  display: block;
+}
+
+button#submit {
+  background: #353f57;
+  color: #fff;
+}
+
+#question.review button#submit {
+  display: none;
+}
+
+button#next {
+  display: none;
+  background: #425fa4;
+  color: #fff;
+}
+
+#question.review button#next {
+  display: initial;
+}
+
+button#explain {
+  display: none;
+  background: #93d585;
+  color: #333;
+}
+
+#question.review button#explain {
+  display: initial;
+}
+
+button#stop {
+  float: right;
+  background: #f23434;
+  color: #fff;
+}
+
+#progressDiv > div {
+  background: rgb(230, 237, 251);
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+#progressBar {
+  width: 0;
+  overflow: visible;
+  white-space: nowrap;
+  background: rgb(109, 154, 240);
+  font-weight: 600;
+  padding: 0;
+  color: #000;
+  border-radius: 5px;
+}
+
+.number {
+  background: #353f57;
+  display: inline-block;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+.number > span {
+  font-weight: 900;
+}
+
+#question {
+  margin: 40px 0;
+}
+
+#clock {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #f42f2f;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+#result {
+  padding: 20px;
+  background: #eee;
+}
+
+#wrapper {
+  display: flex;
+  padding-bottom: 20px;
+}
+
+#wrapper > div:first-child {
+  flex: 0 0 auto;
+  width: 40%;
+}
+
+#diagram {
+  min-height: 100%;
+  flex: 1 0 auto;
+  text-align: center;
+}
+
+#diagram > div {
+  display: inline-block;
+  width: 15%;
+  box-shadow: 5px -5px 8px #ccc;
+  border-radius: 7px;
+  vertical-align: bottom;
+  font-weight: 600;
+  min-height: 1px;
+}
+
+#result p {
+	display: block;
+	padding: 10px;
+	background: #eee;
+	margin: 0;
+}
+
+#result p span {
+	font-weight: 600;
+	background: #b8bbc1;
+	color: #111;
+	padding: 5px 15px;
+	border-radius: 3px;
+	display: block;
+	float: right;
+	min-width: 10px;
+  box-shadow: 3px -3px 5px #ccc;
+}
+
+#overlay {
+  position: fixed; 
+  display: none; 
+  width: 100%;
+  height: 100%; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #efefef; 
+  z-index: 2;
+  overflow-y: auto;
+}
+
+.overlay #overlay {
+  display: block;
+}
+
+#overlay-content {
+  position: static;
+  margin: 50px auto;
+  max-width: 600px;
+  color: #222;
+}
+
+#overlay.banner #overlay-content {
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: auto;
+}
+
+#overlay .loader {
+  height: 2px;
+  background-color: #7d9bfe;
+  animation: .8s infinite normal loading;
+}
+
+#overlay .close {
+  display: initial;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px 10px;
+  cursor: pointer;
+  color: #333;
+  font-size: 50px;
+  line-height: 0;
+}
+
+#overlay.banner .close {
+  display: none;
+}
+
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  border-radius: 4px;
+  background: #fff;
+  padding: 20px 35px 20px 20px;
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: translateX(calc(100% + 30px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+
+.toast.active {
+  transform: translateX(0%);
+}
+
+.toast .toast-content {
+  display: flex;
+  align-items: center;
+}
+
+.toast-content .check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  min-width: 35px;
+  background-color: #4070f4;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.toast-content .message {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.message .text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.message .text.text-1 {
+  font-weight: 600;
+  color: #333;
+}
+
+.toast .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 12px 5px 17px;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 30px;
+  line-height: 0;
+}
+
+.toast .close:hover {
+  opacity: 1;
+}
+
+.toast .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+
+}
+
+.toast .progress:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #4070f4;
+}
+
+.toast .progress.active:before {
+  animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}

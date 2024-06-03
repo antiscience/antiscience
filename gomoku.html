@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Gomoku*</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="fav/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="css/gomoku.css">
+</head>
+
+<body>
+    <header>
+        <h1>Gomoku*</h1> 
+            <a id="reset" href="/gomoku/">Reset</a>
+            <a id="rules" href="/gomoku/">Rules</a>
+            <div id="message"></div>
+    </header>
+
+    <div id="rulesDiv" class="modal hidden">
+        <div class="close">Close</div>
+            <p>1. Black plays first, but it must be a move to the center square (h7).</p>
+            <p>2. White can make any moves without restriction from the beginning.</p>
+            <p>3. Black's 2nd move must be out of 5x5 square at the center, no restrictions thereafter.</p>
+            <p>4. To win you need to form an unbroken line of 5 squares horizontally, vertically or diagonally.</p>
+            <p>5. If you win > 50% out of 10 games aginst yourself you get a prize</p>
+         </div>
+    </div>
+
+    <div id="wrapper">
+    </div>
+	
+    <script src="js/gomoku.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wahl-o-mat*</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="fav/favicon.ico" sizes="any">
+    <link rel="stylesheet" href="css/wahl-o-mat.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400..800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="overlay" class="hidden">
+      <span href="#" class="close">×</span>
+      <div id="overlay-content">
+        <div style="font-size: 24px;">Loading...</div>
+        <div class="loader"></div>
+      </div>
+    </div>
+
+    <header>
+        <h1>Wahl-o-mat*</h1> 
+        <div class="links">
+            <a id="faq" class="local" href="/wahl-o-mat">F.A.Q.</a>
+            <a id="stats" class="local" href="/wahl-o-mat">About</a>
+        </div>
+    </header>
+    <div id="surveyProgress"></div>
+
+    <div id="faq-txt" class="modal hidden">
+        <div class="close">Close</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam euismod efficitur lacus et semper. Sed malesuada, metus non tincidunt consectetur, nisi dolor viverra nisi, pharetra tincidunt est tellus id mauris. Nullam cursus id sem nec facilisis. Mauris dictum erat fermentum purus placerat dignissim. Aliquam venenatis luctus dui eget porta. Nam ac lectus nibh. Cras non rutrum mauris. Morbi bibendum velit venenatis arcu fringilla, vitae congue diam fermentum.</div>
+         </div>
+    </div>
+
+    <div id="stats-txt" class="modal hidden">
+        <div class="close">Close</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam euismod efficitur lacus et semper. Sed malesuada, metus non tincidunt consectetur, nisi dolor viverra nisi, pharetra tincidunt est tellus id mauris. Nullam cursus id sem nec facilisis. Mauris dictum erat fermentum purus placerat dignissim. Aliquam venenatis luctus dui eget porta. Nam ac lectus nibh. Cras non rutrum mauris. Morbi bibendum velit venenatis arcu fringilla, vitae congue diam fermentum.</div>
+         </div>
+    </div>
+
+    <div id="intro">
+        <p>Lorem ipsum...</p> 
+        <p>This is a prototype of election recommendation engine backed by the best available to us in BBQ statistics, machine learning and AI technologies.</p>
+        <p>Push the button... and run - the thing will explode in 5 sec. </p>
+        <p>You were warned.</p>
+        <button type="button" id="startButton">Start</button>
+    </div>
+
+    <div id="survey"></div>
+	
+    <div id="result" class="hidden">Thank you!<br>Here's your replies and our recommendations:
+        <div class="close">Close</div>
+        <div class="content"></div>
+        <button id="recommendation" class="recommendationButton local">Our recommendations</button>
+    </div>
+
+    <div id="recommendation-txt" class="modal hidden">
+        <div class="close">Close</div>
+        We recommend you to vote for
+        <div class="party">Chinese Communist Party</div>
+        in all upcoming elections
+    </div>
+
+
+    <script src="js/wahl-o-mat.js"></script>
+
+</body>
+</html>

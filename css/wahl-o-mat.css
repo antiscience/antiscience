@@ -1,0 +1,380 @@
+* {
+    box-sizing: border-box;
+}
+  
+html {
+    height: 100%;
+}
+
+body {
+  font-family: "Wix Madefor Display", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  background-color: #f6d91d;
+}
+
+.hidden {
+    display: none;
+}
+
+header {
+    position: relative;
+    top: 0;
+    display: flex;
+    margin: 0;
+    background: #edd018;
+    width: 100%;
+    padding: 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.links {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    color: #222;
+    margin: 0;
+    padding: 5px 10px;
+    margin-bottom: 0;
+    display: inline-block;
+    font-weight: 400;
+}
+
+header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: rgb(255, 255, 255, 0.7);
+    font-weight: 100;
+    font-size: 13px;
+}
+    
+input[type="number"] {
+    margin-left: 10px;
+    width: 100px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+input[type="submit"], button, header a {
+    font-family: 'Wix Madefor Display', monospace;
+    width: auto;
+    cursor: pointer;
+    background-color: transparent;
+    color: #222;
+    margin: 5px 5px 5px 0;
+    padding: 5px 20px;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+input[type="submit"]:hover,
+button:hover,
+header a:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+label {
+    margin-right: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #666;
+}
+
+#overlay {
+    position: fixed; 
+    width: 100%;
+    height: 100%; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #efefef; 
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  #overlay-content {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: auto;
+  }
+  
+  #overlay .loader {
+    height: 2px;
+    background-color: #7d9bfe;
+    animation: .8s infinite normal loading;
+  }
+  
+  #overlay .close {
+    display: initial;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px 10px;
+    cursor: pointer;
+    color: #333;
+    background-color: transparent;
+    font-size: 50px;
+    line-height: 0;
+  }
+    
+  @keyframes loading {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  
+  }
+  
+  .modal {
+    max-width: 100%;
+    width: 500px;
+    position: absolute;
+    z-index: 999;
+    padding: 40px;
+    top: 20%;
+    left: 50%;
+    font-size: 1.1em;
+    color: #ccc;
+    transform: translate(-50%);
+    background: #212121;
+    box-shadow: #75757591 20px 20px;
+}
+
+.close {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    background: #444;
+    color: #ccc;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#intro {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 50px 20px 0;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+#survey {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 800px;
+    overflow: hidden;
+}
+
+.questionCard {
+    position: relative;
+    width: 100%;
+    padding: 50px 50px;
+    background-color: #eee;
+    box-shadow: #8a8a8a3b 10px 10px;
+    opacity: 0;
+    transition: opacity ease-out .4s;
+}
+
+.questionCard.active {
+    opacity: 1;
+    transition: opacity ease-in .6s;
+}
+
+.question {
+    margin: 0 0 50px;
+    font-size: 2em;
+}
+
+.questionCard button, #startButton  {
+    background-color: #333;
+    color: #eee;
+    margin: 5px 10px;
+    padding: 10px 20px;
+    box-shadow: #8a8a8a69 4px 4px;
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+.questionCard button:hover, #startButton:hover {
+    background-color: #111;
+    color: #fff;
+    box-shadow: #8a8a8a69 5px 5px;
+
+}
+.questionCard button:active {
+    background-color: #dc143c;
+}
+
+.questionCard button.clicked, .questionCard button.clicked:hover {
+    background-color: #dc143c;
+}
+
+.questionCard .navButtons {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.questionCard .navButtons button {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    width: 50px;
+    height: 50px;
+    box-shadow: none;
+    opacity: .5;
+}
+
+.questionCard .navButtons button:hover {
+    opacity: 1;
+}
+
+.questionCard .navButtons button[name="back"] {
+    background-image: url('/img/back.png');
+}
+
+.questionCard .navButtons button[name="next"] {
+    background-image: url('/img/next.png');
+}
+
+#surveyProgress {
+    height: 5px;
+    background-color: #222;
+    width: 0%;
+}
+
+#startButton {
+    font-size: 2em;
+    display: block;
+    margin: 40px auto;
+}
+
+.slide {
+    animation: slide 1s ease-in;
+}
+
+@keyframes slide {
+    0% {
+      transform: translateX(100%);
+    }
+  
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  #result {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: #FFC107;
+    width: 100%;
+    min-height: 100%;
+    padding: 100px 20px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.content {
+    position: relative;
+    margin: 0 auto;
+    text-align: left;
+    max-width: 600px;
+}
+
+.questionList {
+    display: table;
+    width: 100%;
+    font-size: 20px;
+    margin-top: 40px;
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.questionList > div {
+    display: table-row;
+}
+
+.questionList > div > div {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 5px 20px;
+    background-color: #f4cd5a;
+}
+
+.questionList .answer {
+    padding: 10px 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: #eee;
+}
+
+.questionList .answer- {
+    background-color: transparent;
+    color: #333;
+}
+
+.questionList .answer-1 {
+    background-color: #7CB342;
+    color: #fff;
+}
+
+.questionList .answer-2 {
+    background-color: #424242;
+    color: #fff;
+}
+
+.questionList .answer-3 {
+    background-color: #F44336;
+    color: #fff;
+}
+
+#recommendation-txt {
+    position: fixed;
+    width: 700px;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 100px 100px;
+    text-align: center;
+    background: #E64A19;
+    color: #fff;
+    font-size: 2em;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
+
+#recommendation-txt .party {
+    color: #111;
+    font-weight: 600;
+}
+
+.recommendationButton {
+    font-size: 1.2em;
+    max-width: 600px;
+    margin: 40px 10px;
+    padding: 20px 40px;
+    color: #eee;
+    box-shadow: #22222242 4px 4px 0 0px;
+    background: #222;
+}
